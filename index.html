@@ -2,29 +2,45 @@
 <html lang="vi">
 <head>
 <meta charset="utf-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <title>Lộ trình DET 120</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&family=JetBrains+Mono:wght@500;600&display=swap" rel="stylesheet">
 <style>
-:root{--bg:#f6f8fb;--card:#fff;--ink:#0f172a;--mute:#64748b;--line:#e2e8f0;--soft:#eef2ff;--acc:#1e5eff;--acc2:#e8efff;--ok:#16a34a;--okbg:#e7f6ec;--warn:#d97706;--warnbg:#fff4e0;--bad:#dc2626;--badbg:#fdecec;
---sang:#fff1e0;--sangt:#b45309;--ngay:#e6efff;--ngayt:#1e4fd6;--toi:#f1e8ff;--toit:#7e22ce;--cn:#e7f6ec;--cnt:#15803d}
+/* Bố cục: một cột 980px, header dính trên cùng, mỗi tab là một màn hình. */
+:root{--bg:#f6f8fb;--card:#fff;--ink:#0f172a;--mute:#64748b;--line:#e2e8f0;--line2:#cbd5e1;--soft:#eef2ff;--done:#f8fafc;--hdr:rgba(246,248,251,.92);
+--acc:#1e5eff;--acc2:#e8efff;--accline:#cddbff;--accink:#1e3a8a;--onacc:#fff;
+--ok:#16a34a;--okbg:#e7f6ec;--warn:#b45309;--warnbg:#fff4e0;--bad:#dc2626;--badbg:#fdecec;
+--sang:#fff1e0;--sangt:#b45309;--ngay:#e6efff;--ngayt:#1e4fd6;--toi:#f1e8ff;--toit:#7e22ce;--cn:#e7f6ec;--cnt:#15803d;
+--toastbg:#0f172a;--toastfg:#fff;color-scheme:light}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#0d1220;--card:#151c2e;--ink:#e6eaf3;--mute:#94a0b8;--line:#253049;--line2:#3a4763;--soft:#1c2744;--done:#121828;--hdr:rgba(13,18,32,.9);
+--acc:#6f97ff;--acc2:#1a2647;--accline:#2c3d6b;--accink:#c9d7ff;--onacc:#0d1220;
+--ok:#4ade80;--okbg:#12291c;--warn:#fbbf24;--warnbg:#2c2210;--bad:#f87171;--badbg:#2e1517;
+--sang:#2c2210;--sangt:#fbbf24;--ngay:#16213f;--ngayt:#93b4ff;--toi:#24183a;--toit:#d0a8ff;--cn:#12291c;--cnt:#6ee7a0;
+--toastbg:#e6eaf3;--toastfg:#0d1220;color-scheme:dark}}
+:root[data-theme="dark"]{--bg:#0d1220;--card:#151c2e;--ink:#e6eaf3;--mute:#94a0b8;--line:#253049;--line2:#3a4763;--soft:#1c2744;--done:#121828;--hdr:rgba(13,18,32,.9);
+--acc:#6f97ff;--acc2:#1a2647;--accline:#2c3d6b;--accink:#c9d7ff;--onacc:#0d1220;
+--ok:#4ade80;--okbg:#12291c;--warn:#fbbf24;--warnbg:#2c2210;--bad:#f87171;--badbg:#2e1517;
+--sang:#2c2210;--sangt:#fbbf24;--ngay:#16213f;--ngayt:#93b4ff;--toi:#24183a;--toit:#d0a8ff;--cn:#12291c;--cnt:#6ee7a0;
+--toastbg:#e6eaf3;--toastfg:#0d1220;color-scheme:dark}
 *{box-sizing:border-box}
 body{margin:0;background:var(--bg);color:var(--ink);font-family:Manrope,system-ui,sans-serif;font-size:15px;line-height:1.5;-webkit-font-smoothing:antialiased}
-.mono{font-family:"JetBrains Mono",ui-monospace,monospace}
-header{position:sticky;top:0;z-index:10;background:rgba(246,248,251,.92);backdrop-filter:blur(8px);border-bottom:1px solid var(--line)}
+.mono{font-family:"JetBrains Mono",ui-monospace,monospace;font-variant-numeric:tabular-nums}
+header{position:sticky;top:env(safe-area-inset-top,0px);z-index:10;background:var(--hdr);backdrop-filter:blur(8px);border-bottom:1px solid var(--line)}
 .hwrap{max-width:980px;margin:0 auto;padding:12px 16px 0}
 .brand{display:flex;align-items:center;justify-content:space-between;gap:12px}
 .brand h1{font-size:18px;margin:0;font-weight:800;letter-spacing:-.01em}
 .brand h1 span{color:var(--acc)}
-.sync{font-size:12px;color:var(--mute);display:flex;align-items:center;gap:6px;white-space:nowrap}
-.dot{width:8px;height:8px;border-radius:50%;background:#cbd5e1}
-.dot.ok{background:var(--ok)}.dot.busy{background:var(--warn)}.dot.local{background:#94a3b8}
+.sync{font-size:12px;color:var(--mute);display:flex;align-items:center;gap:6px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;min-width:0}
+.dot{width:8px;height:8px;border-radius:50%;background:var(--line2);flex:none}
+.dot.ok{background:var(--ok)}.dot.busy{background:var(--warn)}.dot.local{background:var(--mute)}
 nav{display:flex;gap:4px;overflow-x:auto;margin-top:10px;scrollbar-width:none}
 nav::-webkit-scrollbar{display:none}
-nav a{padding:9px 12px;border-radius:10px 10px 0 0;color:var(--mute);text-decoration:none;font-weight:600;font-size:14px;white-space:nowrap;border-bottom:2px solid transparent}
+nav a{padding:9px 12px;border-radius:10px 10px 0 0;color:var(--mute);text-decoration:none;font-weight:600;font-size:14px;white-space:nowrap;border-bottom:2px solid transparent;display:flex;align-items:center;gap:6px}
 nav a.on{color:var(--acc);border-bottom-color:var(--acc)}
-main{max-width:980px;margin:0 auto;padding:18px 16px 60px}
+.badge{font:600 11px "JetBrains Mono",monospace;background:var(--bad);color:var(--card);border-radius:99px;padding:1px 7px;line-height:1.5}
+.badge:empty{display:none}
+main{max-width:980px;margin:0 auto;padding:18px 16px 30px}
 .grid{display:grid;gap:12px}
 .kpis{grid-template-columns:repeat(4,1fr)}
 @media(max-width:720px){.kpis{grid-template-columns:repeat(2,1fr)}}
@@ -34,30 +50,35 @@ main{max-width:980px;margin:0 auto;padding:18px 16px 60px}
 .kpi .sub{font-size:12px;color:var(--mute)}
 .bar{height:6px;background:var(--line);border-radius:99px;overflow:hidden;margin-top:8px}
 .bar i{display:block;height:100%;background:var(--acc);border-radius:99px;transition:width .3s}
-h2{font-size:17px;margin:22px 0 10px;font-weight:800;letter-spacing:-.01em}
+h2{font-size:17px;margin:22px 0 10px;font-weight:800;letter-spacing:-.01em;text-wrap:balance}
 h3{font-size:15px;margin:0 0 6px;font-weight:700}
-.dayhead{display:flex;align-items:center;justify-content:space-between;gap:10px;margin:22px 0 10px}
+.dayhead{display:flex;align-items:center;justify-content:space-between;gap:10px;margin:22px 0 10px;flex-wrap:wrap}
 .dayhead h2{margin:0}
-.btn{border:1px solid var(--line);background:var(--card);color:var(--ink);border-radius:10px;padding:8px 12px;font:600 14px Manrope,sans-serif;cursor:pointer}
-.btn:hover{border-color:#cbd5e1}
-.btn.pri{background:var(--acc);border-color:var(--acc);color:#fff}
+.btn{border:1px solid var(--line);background:var(--card);color:var(--ink);border-radius:10px;padding:8px 12px;font:600 14px Manrope,sans-serif;cursor:pointer;text-decoration:none;display:inline-flex;align-items:center;gap:6px;justify-content:center}
+.btn:hover{border-color:var(--line2)}
+.btn:focus-visible,.chip:focus-visible,.chk:focus-visible,nav a:focus-visible,.lnk:focus-visible{outline:2px solid var(--acc);outline-offset:2px}
+.btn.pri{background:var(--acc);border-color:var(--acc);color:var(--onacc)}
 .btn.sm{padding:5px 9px;font-size:13px}
+.btn:disabled{opacity:.5;cursor:default}
 .navbtns{display:flex;gap:6px}
 .task{display:flex;gap:12px;align-items:flex-start;background:var(--card);border:1px solid var(--line);border-radius:14px;padding:14px;margin-bottom:10px;transition:background .2s}
-.task.done{background:#f8fafc}
-.task.done .ttext{color:var(--mute);text-decoration:line-through;text-decoration-color:#cbd5e1}
-.chk{appearance:none;flex:none;width:24px;height:24px;border:2px solid #cbd5e1;border-radius:7px;cursor:pointer;margin-top:1px;display:grid;place-content:center;background:#fff}
+.task.done{background:var(--done)}
+.task.done .ttext{color:var(--mute);text-decoration:line-through;text-decoration-color:var(--line2)}
+.chk{appearance:none;flex:none;width:24px;height:24px;border:2px solid var(--line2);border-radius:7px;cursor:pointer;margin-top:1px;display:grid;place-content:center;background:var(--card)}
 .chk:checked{background:var(--acc);border-color:var(--acc)}
-.chk:checked::after{content:"";width:6px;height:11px;border:solid #fff;border-width:0 2.5px 2.5px 0;transform:rotate(45deg) translate(-1px,-1px)}
+.chk:checked::after{content:"";width:6px;height:11px;border:solid var(--onacc);border-width:0 2.5px 2.5px 0;transform:rotate(45deg) translate(-1px,-1px)}
 .tbody{flex:1;min-width:0}
 .tmeta{display:flex;gap:8px;align-items:center;margin-bottom:4px;flex-wrap:wrap}
-.pill{font-size:12px;font-weight:700;padding:2px 9px;border-radius:99px}
+.pill{font-size:12px;font-weight:700;padding:2px 9px;border-radius:99px;white-space:nowrap}
 .p-Sáng{background:var(--sang);color:var(--sangt)}.p-Ban{background:var(--ngay);color:var(--ngayt)}.p-Tối{background:var(--toi);color:var(--toit)}.p-CN{background:var(--cn);color:var(--cnt)}
+.p-type{background:var(--soft);color:var(--acc)}
 .mins{font-size:12px;color:var(--mute)}
 .ttext ul{margin:0;padding-left:18px}
 .ttext li{margin:2px 0}
+.lnk{color:var(--acc);font-weight:700;font-size:13px;text-decoration:none;white-space:nowrap}
+.lnk:hover{text-decoration:underline}
 .tag-mock{background:var(--warnbg);color:var(--warn)}
-.note{background:var(--acc2);border:1px solid #cddbff;color:#1e3a8a;border-radius:12px;padding:12px 14px;font-size:14px}
+.note{background:var(--acc2);border:1px solid var(--accline);color:var(--accink);border-radius:12px;padding:12px 14px;font-size:14px}
 .empty{color:var(--mute);text-align:center;padding:30px}
 .week{margin-bottom:10px}
 .week summary{list-style:none;cursor:pointer;display:flex;align-items:center;gap:12px}
@@ -69,33 +90,27 @@ h3{font-size:15px;margin:0 0 6px;font-weight:700}
 .wpct{font-weight:700;font-size:14px;min-width:46px;text-align:right}
 .week[open] summary{margin-bottom:12px}
 .drow{display:grid;grid-template-columns:74px 1fr;gap:10px;padding:10px 0;border-top:1px solid var(--line)}
+.drow>div{min-width:0}
 .drow .dd{font-size:13px;font-weight:700}
 .drow .dd small{display:block;color:var(--mute);font-weight:500}
 .drow.today .dd{color:var(--acc)}
 .mini{display:flex;gap:8px;align-items:flex-start;margin:3px 0;font-size:13.5px}
 .mini .chk{width:19px;height:19px;border-radius:6px}
 .mini .chk:checked::after{width:5px;height:9px}
-.mini.done span{color:var(--mute);text-decoration:line-through}
+.mini.done>span{color:var(--mute);text-decoration:line-through}
 table{width:100%;border-collapse:collapse;font-size:14px}
 th{font-size:12px;text-transform:uppercase;letter-spacing:.04em;color:var(--mute);text-align:left;padding:8px 6px;border-bottom:1px solid var(--line);font-weight:700}
 td{padding:6px;border-bottom:1px solid var(--line);vertical-align:middle}
 .tablewrap{overflow-x:auto}
-input.num{width:64px;padding:6px 8px;border:1px solid var(--line);border-radius:8px;font:600 14px "JetBrains Mono",monospace;background:#fff}
+input.num{width:64px;padding:6px 8px;border:1px solid var(--line);border-radius:8px;font:600 14px "JetBrains Mono",monospace;background:var(--card);color:var(--ink)}
 input.num:focus,input.txt:focus,select:focus,textarea:focus{outline:2px solid var(--acc2);border-color:var(--acc)}
-input.txt,select,textarea{width:100%;padding:9px 10px;border:1px solid var(--line);border-radius:10px;font:500 14px Manrope,sans-serif;background:#fff;color:var(--ink)}
-textarea{resize:vertical;min-height:64px}
-.form{display:grid;grid-template-columns:1fr 1fr;gap:10px}
-.form .full{grid-column:1/-1}
-@media(max-width:620px){.form{grid-template-columns:1fr}}
+input.txt,select,textarea{width:100%;padding:9px 10px;border:1px solid var(--line);border-radius:10px;font:500 14px Manrope,sans-serif;background:var(--card);color:var(--ink)}
+textarea{resize:vertical;min-height:44px}
 label.f{font-size:12px;font-weight:700;color:var(--mute);display:block;margin-bottom:4px}
-.err{border-top:1px solid var(--line);padding:12px 0;display:grid;gap:4px}
-.err .wrong{color:var(--bad)}
-.err .right{color:var(--ok)}
-.err .wrong::before{content:"✗ ";font-weight:700}
-.err .right::before{content:"✓ ";font-weight:700}
-.chips{display:flex;gap:6px;flex-wrap:wrap;margin-bottom:10px}
-.chip{border:1px solid var(--line);background:#fff;border-radius:99px;padding:4px 10px;font:600 13px Manrope,sans-serif;cursor:pointer;color:var(--mute)}
-.chip.on{background:var(--acc);border-color:var(--acc);color:#fff}
+.chips{display:flex;gap:6px;flex-wrap:wrap}
+.chip{border:1px solid var(--line);background:var(--card);border-radius:99px;padding:4px 10px;font:600 13px Manrope,sans-serif;cursor:pointer;color:var(--mute)}
+.chip:hover{border-color:var(--line2)}
+.chip.on{background:var(--acc);border-color:var(--acc);color:var(--onacc)}
 .chip b{font-family:"JetBrains Mono",monospace;font-weight:600;margin-left:4px}
 .method{margin-bottom:10px}
 .method .prob{display:inline-block;font-size:12px;font-weight:700;background:var(--badbg);color:var(--bad);border-radius:99px;padding:2px 9px;margin-bottom:8px}
@@ -106,61 +121,334 @@ label.f{font-size:12px;font-weight:700;color:var(--mute);display:block;margin-bo
 .cp .when{font-weight:800;color:var(--acc)}
 .cp .ok{color:var(--ok)}.cp .no{color:var(--warn)}
 .chart{width:100%;height:auto}
+.chart .grid-l{stroke:var(--line)}.chart .goal{stroke:var(--acc);stroke-dasharray:4 4}
+.chart .axis{fill:var(--mute);font:11px "JetBrains Mono",monospace}
+.chart .val{fill:var(--ink);font:700 12px "JetBrains Mono",monospace}
+.chart .ln{fill:none;stroke:var(--acc);stroke-width:2.5;stroke-linejoin:round}.chart .pt{fill:var(--acc)}
 .muted{color:var(--mute)}
 .row2{display:grid;grid-template-columns:1fr 1fr;gap:12px}
 @media(max-width:720px){.row2{grid-template-columns:1fr}}
-.toast{position:fixed;left:50%;bottom:18px;transform:translateX(-50%);background:var(--ink);color:#fff;padding:9px 14px;border-radius:10px;font-size:13px;opacity:0;transition:opacity .2s;pointer-events:none}
+.toast{position:fixed;left:50%;bottom:calc(18px + env(safe-area-inset-bottom,0px));transform:translateX(-50%);background:var(--toastbg);color:var(--toastfg);padding:9px 14px;border-radius:10px;font-size:13px;opacity:0;transition:opacity .2s;pointer-events:none;z-index:20;max-width:calc(100% - 32px)}
 .toast.on{opacity:1}
-.del{border:none;background:none;color:var(--mute);cursor:pointer;font-size:13px;padding:0}
-.del:hover{color:var(--bad)}
 .phase{font-size:12px;font-weight:700;color:var(--mute);text-transform:uppercase;letter-spacing:.05em;margin:18px 0 8px}
+.foot{max-width:980px;margin:0 auto;padding:0 16px 40px;font-size:13px;color:var(--mute);display:flex;gap:10px;flex-wrap:wrap;align-items:center}
+.foot .sp{flex:1}
+
+/* ---------- Sổ lỗi ---------- */
+.rv-hero{display:flex;gap:16px;align-items:center;justify-content:space-between;flex-wrap:wrap}
+.rv-hero .big{font-size:34px;font-weight:800;letter-spacing:-.02em;line-height:1}
+.rv-hero .sub{font-size:13px;color:var(--mute);margin-top:4px}
+.rv-hero .acts{display:flex;gap:8px;flex-wrap:wrap}
+.seg{display:flex;height:8px;border-radius:99px;overflow:hidden;background:var(--line);margin:12px 0 6px}
+.seg i{display:block;height:100%}
+.seg .s-new{background:var(--line2)}.seg .s-learning{background:var(--acc)}.seg .s-done{background:var(--ok)}
+.legend{display:flex;gap:14px;flex-wrap:wrap;font-size:12.5px;color:var(--mute)}
+.legend span::before{content:"";display:inline-block;width:8px;height:8px;border-radius:2px;margin-right:5px;vertical-align:1px;background:var(--c)}
+.tabs{display:flex;gap:4px;margin-bottom:12px;border-bottom:1px solid var(--line)}
+.tabs button{border:none;background:none;padding:6px 10px 8px;font:700 13.5px Manrope,sans-serif;color:var(--mute);cursor:pointer;border-bottom:2px solid transparent;margin-bottom:-1px}
+.tabs button.on{color:var(--acc);border-bottom-color:var(--acc)}
+.form{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.form .full{grid-column:1/-1}
+.form>*{min-width:0}
+select{max-width:100%}
+@media(max-width:620px){.form{grid-template-columns:1fr}}
+.formfoot{display:flex;justify-content:space-between;align-items:center;gap:10px;flex-wrap:wrap}
+.hint{font-size:12.5px;color:var(--mute)}
+.filters{display:grid;gap:8px;margin-bottom:10px}
+.filters .top{display:flex;gap:8px;flex-wrap:wrap;align-items:center}
+.filters .top input{flex:1;min-width:180px}
+.err{border-top:1px solid var(--line);padding:12px 0;display:grid;gap:4px}
+.err:first-child{border-top:0;padding-top:0}
+.err .hd{display:flex;justify-content:space-between;gap:8px;align-items:center;flex-wrap:wrap}
+.ln-w,.ln-r{display:grid;grid-template-columns:16px 1fr;gap:4px;overflow-wrap:anywhere}
+.ln-w::before{content:"✗";color:var(--bad);font-weight:800}
+.ln-r::before{content:"✓";color:var(--ok);font-weight:800}
+del{background:var(--badbg);color:var(--bad);text-decoration:line-through;text-decoration-thickness:1.5px;border-radius:4px;padding:0 2px}
+ins{background:var(--okbg);color:var(--ok);text-decoration:none;font-weight:700;border-radius:4px;padding:0 2px}
+.why{font-size:13.5px;color:var(--mute);padding-left:20px}
+.why b{color:var(--ink);font-weight:700}
+.err .ft{display:flex;gap:10px;align-items:center;justify-content:space-between;flex-wrap:wrap;font-size:12.5px;color:var(--mute);padding-left:20px}
+.err .ft .acts{display:flex;gap:12px}
+.boxes{display:inline-flex;gap:3px;vertical-align:middle;margin-right:6px}
+.boxes i{width:7px;height:7px;border-radius:50%;background:var(--line2)}
+.boxes i.on{background:var(--acc)}.boxes.full i{background:var(--ok)}
+.tlink{border:none;background:none;padding:0;font:600 12.5px Manrope,sans-serif;color:var(--mute);cursor:pointer}
+.tlink:hover{color:var(--acc)}
+.tlink.dng{color:var(--bad)}
+.err.editing{background:var(--done);margin:0 -16px;padding:12px 16px}
+
+/* ---------- Phiên ôn ---------- */
+.rv{max-width:680px;margin:0 auto}
+.rv-top{display:flex;align-items:center;gap:12px;margin-bottom:12px}
+.rv-top .bar{flex:1;margin:0}
+.rv-card{padding:22px}
+.rv-q{font-size:12.5px;font-weight:700;color:var(--mute);text-transform:uppercase;letter-spacing:.04em;margin:14px 0 6px}
+.rv-p{font-size:20px;font-weight:600;line-height:1.45;overflow-wrap:anywhere}
+.rv-ans{margin-top:16px;padding-top:14px;border-top:1px dashed var(--line);display:grid;gap:8px;font-size:17px}
+.rv-ans .why{padding-left:20px;font-size:14px}
+.typed{font-size:14px;padding:8px 10px;border-radius:10px;background:var(--done);border:1px solid var(--line)}
+.typed.good{background:var(--okbg);border-color:transparent;color:var(--ok);font-weight:700}
+.grades{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin-top:16px}
+.grades .btn{flex-direction:column;gap:0;padding:10px 6px;line-height:1.25}
+.grades .btn small{font-weight:500;font-size:12px;color:var(--mute)}
+.g-again{border-color:var(--bad)!important;color:var(--bad)!important}
+.g-hard{border-color:var(--warn)!important;color:var(--warn)!important}
+.g-good{background:var(--okbg)!important;border-color:var(--ok)!important;color:var(--ok)!important}
+.g-good.sug{outline:2px solid var(--ok);outline-offset:2px}
+kbd{font:600 11px "JetBrains Mono",monospace;border:1px solid var(--line2);border-bottom-width:2px;border-radius:5px;padding:0 5px;color:var(--mute)}
+.keys{font-size:12px;color:var(--mute);text-align:center;margin-top:12px}
+@media(max-width:560px){.keys{display:none}.rv-p{font-size:18px}}
+.sumgrid{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin:14px 0}
+.sumgrid div{border-radius:12px;padding:12px;text-align:center;font-size:13px;font-weight:600}
+.sumgrid b{display:block;font:800 24px "JetBrains Mono",monospace}
+@media (prefers-reduced-motion:reduce){*{transition:none!important}}
 </style>
 </head>
 <body>
 <header><div class="hwrap">
-  <div class="brand"><h1>Lộ trình <span>DET 120</span></h1><div class="sync"><span class="dot" id="dot"></span><span id="synctxt">Đang kết nối…</span></div></div>
+  <div class="brand"><h1>Lộ trình <span>DET 120</span></h1><div class="sync"><span class="dot" id="dot"></span><span id="synctxt">Đang tải…</span></div></div>
   <nav id="nav">
     <a href="#today" data-v="today">Hôm nay</a>
     <a href="#plan" data-v="plan">Lộ trình 9 tuần</a>
     <a href="#scores" data-v="scores">Thi thử & mốc</a>
-    <a href="#errors" data-v="errors">Sổ lỗi</a>
+    <a href="#errors" data-v="errors">Sổ lỗi <span class="badge" id="navDue"></span></a>
     <a href="#methods" data-v="methods">Phương pháp</a>
   </nav>
 </div></header>
 <main id="app"></main>
-<div class="toast" id="toast"></div>
+<div class="foot">
+  <span>Dữ liệu lưu trong trình duyệt này. Nên tải bản sao lưu mỗi tuần.</span><span class="sp"></span>
+  <button class="btn sm" id="btnExport" type="button">Tải bản sao lưu</button>
+  <button class="btn sm" id="btnImport" type="button">Nhập bản sao lưu</button>
+  <input type="file" id="impFile" accept="application/json,.json" hidden>
+</div>
+<div class="toast" id="toast" role="status" aria-live="polite"></div>
 <script>
-const PLAN = [{"d": "2026-11-19", "slot": "Ban ngày", "t": "Sổ Từ 15' · Đọc tab Phương pháp 15'", "m": 30, "w": "T0"}, {"d": "2026-11-19", "slot": "Tối", "t": "Phá băng: ghi âm 1 đề Speak About the Photo theo khung 3 phần (60s). Không ai nghe, không chấm 15'", "m": 15, "w": "T0"}, {"d": "2026-11-20", "slot": "Sáng", "t": "Làm quen khung nói: 3 đề Photo + 2 đề Read, Then Speak, ghi âm 40' · Chép 10 lỗi hay mắc vào Sổ lỗi 20'", "m": 60, "w": "T0"}, {"d": "2026-11-20", "slot": "Ban ngày", "t": "Sổ Từ 15' · Listen and Type chép 3 lượt 20'", "m": 35, "w": "T0"}, {"d": "2026-11-20", "slot": "Tối", "t": "Nghe lại bản ghi sáng, tìm đúng 1 chỗ rối, nói lại đề đó 15'", "m": 15, "w": "T0"}, {"d": "2026-11-21", "slot": "Ban ngày", "t": "Sổ Từ 15' · Interactive Reading 1 bài 25'", "m": 40, "w": "T0"}, {"d": "2026-11-21", "slot": "Tối", "t": "Interactive Speaking 3 câu (Trả lời – Vì sao – Ví dụ), ghi âm 15'", "m": 15, "w": "T0"}, {"d": "2026-11-22", "slot": "CN", "t": "Sổ Từ 15' (chỉ ôn)", "m": 15, "w": "T0"}, {"d": "2026-11-23", "slot": "Sáng", "t": "THI THỬ: Arno full test – làm như thi thật, không dừng 60' · Ghi điểm vào Tổng quan, tìm 3 dạng mất điểm nhiều nhất → Sổ lỗi 40'", "m": 100, "w": "T1"}, {"d": "2026-11-23", "slot": "Ban ngày", "t": "Sổ Từ 15' · Listen and Type (chép 3 lượt, phân loại lỗi) 20' · Read and Complete 20' (ghi câu sai vào Sổ lỗi)", "m": 55, "w": "T1"}, {"d": "2026-11-23", "slot": "Tối", "t": "Ôn Sổ lỗi 10' · Đưa từ/collocation mới vào Sổ Từ 10' · Shadow 5 câu Listen and Type nghe sai 10'", "m": 30, "w": "T1"}, {"d": "2026-11-24", "slot": "Ban ngày", "t": "Sổ Từ 15' · Interactive Reading 1 bài (không bấm giờ) 20' · Fill in the Blanks 20' (ghi câu sai vào Sổ lỗi)", "m": 55, "w": "T1"}, {"d": "2026-11-24", "slot": "Tối", "t": "Nói 15' không bấm giờ: Speak About the Photo ×3 – ghi âm → nghe → nói lại · Shadowing 10' câu nghe sai · Viết lại câu đúng trong Sổ lỗi 10'", "m": 35, "w": "T1"}, {"d": "2026-11-25", "slot": "Sáng", "t": "Speaking Sample + Listen, Then Speak 2 đề, kỹ thuật 4-3-2 60' · Writing Sample 1 bài 30' · Gemini chấm + Sổ lỗi 30'", "m": 120, "w": "T1"}, {"d": "2026-11-25", "slot": "Ban ngày", "t": "Sổ Từ 15' · Listen and Type (chép 3 lượt, phân loại lỗi) 20' · Fill in the Blanks 20' (ghi câu sai vào Sổ lỗi)", "m": 55, "w": "T1"}, {"d": "2026-11-25", "slot": "Tối", "t": "Ôn Sổ lỗi 10' · Đưa từ/collocation mới vào Sổ Từ 10' · Shadow 5 câu Listen and Type nghe sai 10'", "m": 30, "w": "T1"}, {"d": "2026-11-26", "slot": "Ban ngày", "t": "Sổ Từ 15' · Interactive Reading 1 bài (không bấm giờ) 20' · Read and Complete 20' (ghi câu sai vào Sổ lỗi)", "m": 55, "w": "T1"}, {"d": "2026-11-26", "slot": "Tối", "t": "Nói 15' không bấm giờ: Read, Then Speak ×3 – ghi âm → nghe → nói lại · Shadowing 10' câu nghe sai · Viết lại câu đúng trong Sổ lỗi 10'", "m": 35, "w": "T1"}, {"d": "2026-11-27", "slot": "Sáng", "t": "Interactive Speaking 1 bộ (mỗi câu: Trả lời – Vì sao – Ví dụ) 40' · Interactive Listening (Listen and Respond + Summarize) 40' · Write About the Photo ×3 20' · Sổ lỗi 20'", "m": 120, "w": "T1"}, {"d": "2026-11-27", "slot": "Ban ngày", "t": "Sổ Từ 15' · Listen and Type (chép 3 lượt, phân loại lỗi) 20' · Interactive Listening (chỉ nghe + ghi ý) 20' (ghi câu sai vào Sổ lỗi)", "m": 55, "w": "T1"}, {"d": "2026-11-27", "slot": "Tối", "t": "Ôn Sổ lỗi 10' · Đưa từ/collocation mới vào Sổ Từ 10' · Shadow 5 câu Listen and Type nghe sai 10'", "m": 30, "w": "T1"}, {"d": "2026-11-28", "slot": "Ban ngày", "t": "Sổ Từ 15' · Interactive Reading 1 bài (không bấm giờ) 20' · Listen and Type 20' (ghi câu sai vào Sổ lỗi)", "m": 55, "w": "T1"}, {"d": "2026-11-28", "slot": "Tối", "t": "Nói 15' không bấm giờ: Interactive Speaking 5 câu – ghi âm → nghe → nói lại · Shadowing 10' câu nghe sai · Viết lại câu đúng trong Sổ lỗi 10'", "m": 35, "w": "T1"}, {"d": "2026-11-29", "slot": "CN", "t": "Sổ Từ 15' (chỉ ôn) · Cập nhật tab Theo tuần: % xong, điều chỉnh tuần sau 10'", "m": 25, "w": "T1"}, {"d": "2026-11-30", "slot": "Sáng", "t": "Ôn khung nói 10' · Speak About the Photo + Read, Then Speak 3 đề (dàn ý 3 ô → nói → nghe lại → nói lại) 50' · Write About the Photo ×3 + Interactive Writing 1 bài 40' · Chữa → Sổ lỗi 20'", "m": 120, "w": "T2"}, {"d": "2026-11-30", "slot": "Ban ngày", "t": "Sổ Từ 15' · Listen and Type (chép 3 lượt, phân loại lỗi) 20' · Read and Complete 20' (ghi câu sai vào Sổ lỗi)", "m": 55, "w": "T2"}, {"d": "2026-11-30", "slot": "Tối", "t": "Ôn Sổ lỗi 10' · Đưa từ/collocation mới vào Sổ Từ 10' · Shadow 5 câu Listen and Type nghe sai 10'", "m": 30, "w": "T2"}, {"d": "2026-12-01", "slot": "Ban ngày", "t": "Sổ Từ 15' · Interactive Reading 1 bài (không bấm giờ) 20' · Fill in the Blanks 20' (ghi câu sai vào Sổ lỗi)", "m": 55, "w": "T2"}, {"d": "2026-12-01", "slot": "Tối", "t": "Nói 20' không bấm giờ: Speak About the Photo ×3 – ghi âm → nghe → nói lại · Shadowing 10' câu nghe sai · Viết lại câu đúng trong Sổ lỗi 10'", "m": 40, "w": "T2"}, {"d": "2026-12-02", "slot": "Sáng", "t": "Speaking Sample + Listen, Then Speak 2 đề, kỹ thuật 4-3-2 60' · Writing Sample 1 bài 30' · Gemini chấm + Sổ lỗi 30'", "m": 120, "w": "T2"}, {"d": "2026-12-02", "slot": "Ban ngày", "t": "Sổ Từ 15' · Listen and Type (chép 3 lượt, phân loại lỗi) 20' · Fill in the Blanks 20' (ghi câu sai vào Sổ lỗi)", "m": 55, "w": "T2"}, {"d": "2026-12-02", "slot": "Tối", "t": "Ôn Sổ lỗi 10' · Đưa từ/collocation mới vào Sổ Từ 10' · Shadow 5 câu Listen and Type nghe sai 10'", "m": 30, "w": "T2"}, {"d": "2026-12-03", "slot": "Ban ngày", "t": "Sổ Từ 15' · Interactive Reading 1 bài (không bấm giờ) 20' · Read and Complete 20' (ghi câu sai vào Sổ lỗi)", "m": 55, "w": "T2"}, {"d": "2026-12-03", "slot": "Tối", "t": "Nói 20' không bấm giờ: Read, Then Speak ×3 – ghi âm → nghe → nói lại · Shadowing 10' câu nghe sai · Viết lại câu đúng trong Sổ lỗi 10'", "m": 40, "w": "T2"}, {"d": "2026-12-04", "slot": "Sáng", "t": "Interactive Speaking 1 bộ (mỗi câu: Trả lời – Vì sao – Ví dụ) 40' · Interactive Listening (Listen and Respond + Summarize) 40' · Write About the Photo ×3 20' · Sổ lỗi 20'", "m": 120, "w": "T2"}, {"d": "2026-12-04", "slot": "Ban ngày", "t": "Sổ Từ 15' · Listen and Type (chép 3 lượt, phân loại lỗi) 20' · Interactive Listening (chỉ nghe + ghi ý) 20' (ghi câu sai vào Sổ lỗi)", "m": 55, "w": "T2"}, {"d": "2026-12-04", "slot": "Tối", "t": "Ôn Sổ lỗi 10' · Đưa từ/collocation mới vào Sổ Từ 10' · Shadow 5 câu Listen and Type nghe sai 10'", "m": 30, "w": "T2"}, {"d": "2026-12-05", "slot": "Ban ngày", "t": "Sổ Từ 15' · Interactive Reading 1 bài (không bấm giờ) 20' · Listen and Type 20' (ghi câu sai vào Sổ lỗi)", "m": 55, "w": "T2"}, {"d": "2026-12-05", "slot": "Tối", "t": "Nói 20' không bấm giờ: Interactive Speaking 5 câu – ghi âm → nghe → nói lại · Shadowing 10' câu nghe sai · Viết lại câu đúng trong Sổ lỗi 10'", "m": 40, "w": "T2"}, {"d": "2026-12-06", "slot": "CN", "t": "Sổ Từ 15' (chỉ ôn) · Cập nhật tab Theo tuần: % xong, điều chỉnh tuần sau 10'", "m": 25, "w": "T2"}, {"d": "2026-12-07", "slot": "Sáng", "t": "THI THỬ: DET Practice Test (chính thức, miễn phí) – làm như thi thật, không dừng 60' · Ghi điểm vào Tổng quan, tìm 3 dạng mất điểm nhiều nhất → Sổ lỗi 40'", "m": 100, "w": "T3"}, {"d": "2026-12-07", "slot": "Ban ngày", "t": "Sổ Từ 15' · Listen and Type (chép 3 lượt, phân loại lỗi) 20' · Read and Complete 20' (ghi câu sai vào Sổ lỗi)", "m": 55, "w": "T3"}, {"d": "2026-12-07", "slot": "Tối", "t": "Ôn Sổ lỗi 10' · Đưa từ/collocation mới vào Sổ Từ 10' · Shadow 5 câu Listen and Type nghe sai 10'", "m": 30, "w": "T3"}, {"d": "2026-12-08", "slot": "Ban ngày", "t": "Sổ Từ 15' · Interactive Reading 1 bài (không bấm giờ) 20' · Fill in the Blanks 20' (ghi câu sai vào Sổ lỗi)", "m": 55, "w": "T3"}, {"d": "2026-12-08", "slot": "Tối", "t": "Nói 20' không bấm giờ: Speak About the Photo ×3 – ghi âm → nghe → nói lại · Shadowing 10' câu nghe sai · Viết lại câu đúng trong Sổ lỗi 10'", "m": 40, "w": "T3"}, {"d": "2026-12-09", "slot": "Sáng", "t": "Speaking Sample + Listen, Then Speak 2 đề, kỹ thuật 4-3-2 60' · Writing Sample 1 bài 30' · Gemini chấm + Sổ lỗi 30'", "m": 120, "w": "T3"}, {"d": "2026-12-09", "slot": "Ban ngày", "t": "Sổ Từ 15' · Listen and Type (chép 3 lượt, phân loại lỗi) 20' · Fill in the Blanks 20' (ghi câu sai vào Sổ lỗi)", "m": 55, "w": "T3"}, {"d": "2026-12-09", "slot": "Tối", "t": "Ôn Sổ lỗi 10' · Đưa từ/collocation mới vào Sổ Từ 10' · Shadow 5 câu Listen and Type nghe sai 10'", "m": 30, "w": "T3"}, {"d": "2026-12-10", "slot": "Ban ngày", "t": "Sổ Từ 15' · Interactive Reading 1 bài (không bấm giờ) 20' · Read and Complete 20' (ghi câu sai vào Sổ lỗi)", "m": 55, "w": "T3"}, {"d": "2026-12-10", "slot": "Tối", "t": "Nói 20' không bấm giờ: Read, Then Speak ×3 – ghi âm → nghe → nói lại · Shadowing 10' câu nghe sai · Viết lại câu đúng trong Sổ lỗi 10'", "m": 40, "w": "T3"}, {"d": "2026-12-11", "slot": "Sáng", "t": "Interactive Speaking 1 bộ (mỗi câu: Trả lời – Vì sao – Ví dụ) 40' · Interactive Listening (Listen and Respond + Summarize) 40' · Write About the Photo ×3 20' · Sổ lỗi 20'", "m": 120, "w": "T3"}, {"d": "2026-12-11", "slot": "Ban ngày", "t": "Sổ Từ 15' · Listen and Type (chép 3 lượt, phân loại lỗi) 20' · Interactive Listening (chỉ nghe + ghi ý) 20' (ghi câu sai vào Sổ lỗi)", "m": 55, "w": "T3"}, {"d": "2026-12-11", "slot": "Tối", "t": "Ôn Sổ lỗi 10' · Đưa từ/collocation mới vào Sổ Từ 10' · Shadow 5 câu Listen and Type nghe sai 10'", "m": 30, "w": "T3"}, {"d": "2026-12-12", "slot": "Ban ngày", "t": "Sổ Từ 15' · Interactive Reading 1 bài (không bấm giờ) 20' · Listen and Type 20' (ghi câu sai vào Sổ lỗi)", "m": 55, "w": "T3"}, {"d": "2026-12-12", "slot": "Tối", "t": "Nói 20' không bấm giờ: Interactive Speaking 5 câu – ghi âm → nghe → nói lại · Shadowing 10' câu nghe sai · Viết lại câu đúng trong Sổ lỗi 10'", "m": 40, "w": "T3"}, {"d": "2026-12-13", "slot": "CN", "t": "Sổ Từ 15' (chỉ ôn) · Cập nhật tab Theo tuần: % xong, điều chỉnh tuần sau 10'", "m": 25, "w": "T3"}, {"d": "2026-12-14", "slot": "Sáng", "t": "Speaking bấm giờ như thi: Photo ×3 + Read, Then Speak ×3 → nghe lại theo checklist 60' · Writing bấm giờ: Photo ×3 + Interactive Writing 40' · Chữa → Sổ lỗi 20'", "m": 120, "w": "T4"}, {"d": "2026-12-14", "slot": "Ban ngày", "t": "Sổ Từ 15' · Listen and Type bấm giờ 20' · Read and Complete bấm giờ 20' · Đọc 1 đoạn ngắn, nhặt 3 collocation 10'", "m": 65, "w": "T4"}, {"d": "2026-12-14", "slot": "Tối", "t": "Ôn Sổ lỗi 10' · Đưa từ/collocation mới vào Sổ Từ 10' · Shadow 5 câu Listen and Type nghe sai 10'", "m": 30, "w": "T4"}, {"d": "2026-12-15", "slot": "Ban ngày", "t": "Sổ Từ 15' · Interactive Reading 1 bài bấm giờ 20' · Fill in the Blanks bấm giờ 20' · Đọc 1 đoạn ngắn, nhặt 3 collocation 10'", "m": 65, "w": "T4"}, {"d": "2026-12-15", "slot": "Tối", "t": "Nói 25' bấm giờ: Photo + Read, Then Speak · Shadowing 10' · Sổ lỗi 10'", "m": 45, "w": "T4"}, {"d": "2026-12-16", "slot": "Sáng", "t": "Speaking Sample + Listen, Then Speak ×2 bấm giờ, mỗi đề nói 2 lần 50' · Writing Sample bấm giờ 30' · Interactive Listening 1 bộ 20' · Gemini chấm + Sổ lỗi 20'", "m": 120, "w": "T4"}, {"d": "2026-12-16", "slot": "Ban ngày", "t": "Sổ Từ 15' · Listen and Type bấm giờ 20' · Fill in the Blanks bấm giờ 20' · Đọc 1 đoạn ngắn, nhặt 3 collocation 10'", "m": 65, "w": "T4"}, {"d": "2026-12-16", "slot": "Tối", "t": "Ôn Sổ lỗi 10' · Đưa từ/collocation mới vào Sổ Từ 10' · Shadow 5 câu Listen and Type nghe sai 10'", "m": 30, "w": "T4"}, {"d": "2026-12-17", "slot": "Ban ngày", "t": "Sổ Từ 15' · Interactive Reading 1 bài bấm giờ 20' · Read and Complete bấm giờ 20' · Đọc 1 đoạn ngắn, nhặt 3 collocation 10'", "m": 65, "w": "T4"}, {"d": "2026-12-17", "slot": "Tối", "t": "Nói 25' bấm giờ: Interactive Speaking · Shadowing 10' · Sổ lỗi 10'", "m": 45, "w": "T4"}, {"d": "2026-12-18", "slot": "Sáng", "t": "Interactive Speaking full bộ bấm giờ 40' · Interactive Listening ×2 bộ 40' · Write About the Photo ×3 bấm giờ 20' · Sổ lỗi 20'", "m": 120, "w": "T4"}, {"d": "2026-12-18", "slot": "Ban ngày", "t": "Sổ Từ 15' · Listen and Type bấm giờ 20' · Interactive Listening (chỉ nghe + ghi ý) bấm giờ 20' · Đọc 1 đoạn ngắn, nhặt 3 collocation 10'", "m": 65, "w": "T4"}, {"d": "2026-12-18", "slot": "Tối", "t": "Ôn Sổ lỗi 10' · Đưa từ/collocation mới vào Sổ Từ 10' · Shadow 5 câu Listen and Type nghe sai 10'", "m": 30, "w": "T4"}, {"d": "2026-12-19", "slot": "Ban ngày", "t": "Sổ Từ 15' · Interactive Reading 1 bài bấm giờ 20' · Listen and Type bấm giờ 20' · Đọc 1 đoạn ngắn, nhặt 3 collocation 10'", "m": 65, "w": "T4"}, {"d": "2026-12-19", "slot": "Tối", "t": "Nói 25' bấm giờ: Speaking Sample + Listen, Then Speak · Shadowing 10' · Sổ lỗi 10'", "m": 45, "w": "T4"}, {"d": "2026-12-20", "slot": "CN", "t": "Sổ Từ 15' (chỉ ôn) · Cập nhật tab Theo tuần: % xong, điều chỉnh tuần sau 10'", "m": 25, "w": "T4"}, {"d": "2026-12-21", "slot": "Sáng", "t": "THI THỬ: Arno full test – làm như thi thật, không dừng 60' · Ghi điểm vào Tổng quan, tìm 3 dạng mất điểm nhiều nhất → Sổ lỗi 40'", "m": 100, "w": "T5"}, {"d": "2026-12-21", "slot": "Ban ngày", "t": "Sổ Từ 15' · Listen and Type bấm giờ 20' · Read and Complete bấm giờ 20' · Đọc 1 đoạn ngắn, nhặt 3 collocation 10'", "m": 65, "w": "T5"}, {"d": "2026-12-21", "slot": "Tối", "t": "Ôn Sổ lỗi 10' · Đưa từ/collocation mới vào Sổ Từ 10' · Shadow 5 câu Listen and Type nghe sai 10'", "m": 30, "w": "T5"}, {"d": "2026-12-22", "slot": "Ban ngày", "t": "Sổ Từ 15' · Interactive Reading 1 bài bấm giờ 20' · Fill in the Blanks bấm giờ 20' · Đọc 1 đoạn ngắn, nhặt 3 collocation 10'", "m": 65, "w": "T5"}, {"d": "2026-12-22", "slot": "Tối", "t": "Nói 25' bấm giờ: Photo + Read, Then Speak · Shadowing 10' · Sổ lỗi 10'", "m": 45, "w": "T5"}, {"d": "2026-12-23", "slot": "Sáng", "t": "Speaking Sample + Listen, Then Speak ×2 bấm giờ, mỗi đề nói 2 lần 50' · Writing Sample bấm giờ 30' · Interactive Listening 1 bộ 20' · Gemini chấm + Sổ lỗi 20'", "m": 120, "w": "T5"}, {"d": "2026-12-23", "slot": "Ban ngày", "t": "Sổ Từ 15' · Listen and Type bấm giờ 20' · Fill in the Blanks bấm giờ 20' · Đọc 1 đoạn ngắn, nhặt 3 collocation 10'", "m": 65, "w": "T5"}, {"d": "2026-12-23", "slot": "Tối", "t": "Ôn Sổ lỗi 10' · Đưa từ/collocation mới vào Sổ Từ 10' · Shadow 5 câu Listen and Type nghe sai 10'", "m": 30, "w": "T5"}, {"d": "2026-12-24", "slot": "Ban ngày", "t": "Sổ Từ 15' · Interactive Reading 1 bài bấm giờ 20' · Read and Complete bấm giờ 20' · Đọc 1 đoạn ngắn, nhặt 3 collocation 10'", "m": 65, "w": "T5"}, {"d": "2026-12-24", "slot": "Tối", "t": "Nói 25' bấm giờ: Interactive Speaking · Shadowing 10' · Sổ lỗi 10'", "m": 45, "w": "T5"}, {"d": "2026-12-25", "slot": "Sáng", "t": "Interactive Speaking full bộ bấm giờ 40' · Interactive Listening ×2 bộ 40' · Write About the Photo ×3 bấm giờ 20' · Sổ lỗi 20'", "m": 120, "w": "T5"}, {"d": "2026-12-25", "slot": "Ban ngày", "t": "Sổ Từ 15' · Listen and Type bấm giờ 20' · Interactive Listening (chỉ nghe + ghi ý) bấm giờ 20' · Đọc 1 đoạn ngắn, nhặt 3 collocation 10'", "m": 65, "w": "T5"}, {"d": "2026-12-25", "slot": "Tối", "t": "Ôn Sổ lỗi 10' · Đưa từ/collocation mới vào Sổ Từ 10' · Shadow 5 câu Listen and Type nghe sai 10'", "m": 30, "w": "T5"}, {"d": "2026-12-26", "slot": "Ban ngày", "t": "Sổ Từ 15' · Interactive Reading 1 bài bấm giờ 20' · Listen and Type bấm giờ 20' · Đọc 1 đoạn ngắn, nhặt 3 collocation 10'", "m": 65, "w": "T5"}, {"d": "2026-12-26", "slot": "Tối", "t": "Nói 25' bấm giờ: Speaking Sample + Listen, Then Speak · Shadowing 10' · Sổ lỗi 10'", "m": 45, "w": "T5"}, {"d": "2026-12-27", "slot": "CN", "t": "Sổ Từ 15' (chỉ ôn) · Cập nhật tab Theo tuần: % xong, điều chỉnh tuần sau 10'", "m": 25, "w": "T5"}, {"d": "2026-12-28", "slot": "Sáng", "t": "THI THỬ: DET Practice Test (chính thức) → quyết định đăng ký – làm như thi thật, không dừng 60' · Ghi điểm vào Tổng quan, tìm 3 dạng mất điểm nhiều nhất → Sổ lỗi 40'", "m": 100, "w": "T6"}, {"d": "2026-12-28", "slot": "Ban ngày", "t": "Sổ Từ 15' · Listen and Type bấm giờ 20' · Read and Complete bấm giờ 20' · Đọc 1 đoạn ngắn, nhặt 3 collocation 10'", "m": 65, "w": "T6"}, {"d": "2026-12-28", "slot": "Tối", "t": "Ôn Sổ lỗi 10' · Đưa từ/collocation mới vào Sổ Từ 10' · Shadow 5 câu Listen and Type nghe sai 10'", "m": 30, "w": "T6"}, {"d": "2026-12-29", "slot": "Ban ngày", "t": "Sổ Từ 15' · Interactive Reading 1 bài bấm giờ 20' · Fill in the Blanks bấm giờ 20' · Đọc 1 đoạn ngắn, nhặt 3 collocation 10'", "m": 65, "w": "T6"}, {"d": "2026-12-29", "slot": "Tối", "t": "Nói 25' bấm giờ: Photo + Read, Then Speak · Shadowing 10' · Sổ lỗi 10'", "m": 45, "w": "T6"}, {"d": "2026-12-30", "slot": "Sáng", "t": "Speaking Sample + Listen, Then Speak ×2 bấm giờ, mỗi đề nói 2 lần 50' · Writing Sample bấm giờ 30' · Interactive Listening 1 bộ 20' · Gemini chấm + Sổ lỗi 20'", "m": 120, "w": "T6"}, {"d": "2026-12-30", "slot": "Ban ngày", "t": "Sổ Từ 15' · Listen and Type bấm giờ 20' · Fill in the Blanks bấm giờ 20' · Đọc 1 đoạn ngắn, nhặt 3 collocation 10'", "m": 65, "w": "T6"}, {"d": "2026-12-30", "slot": "Tối", "t": "Ôn Sổ lỗi 10' · Đưa từ/collocation mới vào Sổ Từ 10' · Shadow 5 câu Listen and Type nghe sai 10'", "m": 30, "w": "T6"}, {"d": "2026-12-31", "slot": "Ban ngày", "t": "Sổ Từ 15' · Interactive Reading 1 bài bấm giờ 20' · Read and Complete bấm giờ 20' · Đọc 1 đoạn ngắn, nhặt 3 collocation 10'", "m": 65, "w": "T6"}, {"d": "2026-12-31", "slot": "Tối", "t": "Nói 25' bấm giờ: Interactive Speaking · Shadowing 10' · Sổ lỗi 10'", "m": 45, "w": "T6"}, {"d": "2027-01-01", "slot": "Sáng", "t": "Interactive Speaking full bộ bấm giờ 40' · Interactive Listening ×2 bộ 40' · Write About the Photo ×3 bấm giờ 20' · Sổ lỗi 20'", "m": 120, "w": "T6"}, {"d": "2027-01-01", "slot": "Ban ngày", "t": "Sổ Từ 15' · Listen and Type bấm giờ 20' · Interactive Listening (chỉ nghe + ghi ý) bấm giờ 20' · Đọc 1 đoạn ngắn, nhặt 3 collocation 10'", "m": 65, "w": "T6"}, {"d": "2027-01-01", "slot": "Tối", "t": "Ôn Sổ lỗi 10' · Đưa từ/collocation mới vào Sổ Từ 10' · Shadow 5 câu Listen and Type nghe sai 10'", "m": 30, "w": "T6"}, {"d": "2027-01-02", "slot": "Ban ngày", "t": "Sổ Từ 15' · Interactive Reading 1 bài bấm giờ 20' · Listen and Type bấm giờ 20' · Đọc 1 đoạn ngắn, nhặt 3 collocation 10'", "m": 65, "w": "T6"}, {"d": "2027-01-02", "slot": "Tối", "t": "Nói 25' bấm giờ: Speaking Sample + Listen, Then Speak · Shadowing 10' · Sổ lỗi 10'", "m": 45, "w": "T6"}, {"d": "2027-01-03", "slot": "CN", "t": "Sổ Từ 15' (chỉ ôn) · Cập nhật tab Theo tuần: % xong, điều chỉnh tuần sau 10'", "m": 25, "w": "T6"}, {"d": "2027-01-04", "slot": "Sáng", "t": "THI THỬ: Arno full test – làm như thi thật, không dừng 60' · Ghi điểm vào Tổng quan, tìm 3 dạng mất điểm nhiều nhất → Sổ lỗi 40'", "m": 100, "w": "T7"}, {"d": "2027-01-04", "slot": "Ban ngày", "t": "Sổ Từ 15' · Listen and Type bấm giờ 20' · Read and Complete bấm giờ 20' · Đọc 1 đoạn ngắn, nhặt 3 collocation 10'", "m": 65, "w": "T7"}, {"d": "2027-01-04", "slot": "Tối", "t": "Ôn Sổ lỗi 10' · Đưa từ/collocation mới vào Sổ Từ 10' · Shadow 5 câu Listen and Type nghe sai 10'", "m": 30, "w": "T7"}, {"d": "2027-01-05", "slot": "Ban ngày", "t": "Sổ Từ 15' · Interactive Reading 1 bài bấm giờ 20' · Fill in the Blanks bấm giờ 20' · Đọc 1 đoạn ngắn, nhặt 3 collocation 10'", "m": 65, "w": "T7"}, {"d": "2027-01-05", "slot": "Tối", "t": "Nói 25' bấm giờ: Photo + Read, Then Speak · Shadowing 10' · Sổ lỗi 10'", "m": 45, "w": "T7"}, {"d": "2027-01-06", "slot": "Sáng", "t": "Speaking Sample + Listen, Then Speak ×2 bấm giờ, mỗi đề nói 2 lần 50' · Writing Sample bấm giờ 30' · Interactive Listening 1 bộ 20' · Gemini chấm + Sổ lỗi 20'", "m": 120, "w": "T7"}, {"d": "2027-01-06", "slot": "Ban ngày", "t": "Sổ Từ 15' · Listen and Type bấm giờ 20' · Fill in the Blanks bấm giờ 20' · Đọc 1 đoạn ngắn, nhặt 3 collocation 10'", "m": 65, "w": "T7"}, {"d": "2027-01-06", "slot": "Tối", "t": "Ôn Sổ lỗi 10' · Đưa từ/collocation mới vào Sổ Từ 10' · Shadow 5 câu Listen and Type nghe sai 10'", "m": 30, "w": "T7"}, {"d": "2027-01-07", "slot": "Ban ngày", "t": "Sổ Từ 15' · Interactive Reading 1 bài bấm giờ 20' · Read and Complete bấm giờ 20' · Đọc 1 đoạn ngắn, nhặt 3 collocation 10'", "m": 65, "w": "T7"}, {"d": "2027-01-07", "slot": "Tối", "t": "Nói 25' bấm giờ: Interactive Speaking · Shadowing 10' · Sổ lỗi 10'", "m": 45, "w": "T7"}, {"d": "2027-01-08", "slot": "Sáng", "t": "Interactive Speaking full bộ bấm giờ 40' · Interactive Listening ×2 bộ 40' · Write About the Photo ×3 bấm giờ 20' · Sổ lỗi 20'", "m": 120, "w": "T7"}, {"d": "2027-01-08", "slot": "Ban ngày", "t": "Sổ Từ 15' · Listen and Type bấm giờ 20' · Interactive Listening (chỉ nghe + ghi ý) bấm giờ 20' · Đọc 1 đoạn ngắn, nhặt 3 collocation 10'", "m": 65, "w": "T7"}, {"d": "2027-01-08", "slot": "Tối", "t": "Ôn Sổ lỗi 10' · Đưa từ/collocation mới vào Sổ Từ 10' · Shadow 5 câu Listen and Type nghe sai 10'", "m": 30, "w": "T7"}, {"d": "2027-01-09", "slot": "Ban ngày", "t": "Sổ Từ 15' · Interactive Reading 1 bài bấm giờ 20' · Listen and Type bấm giờ 20' · Đọc 1 đoạn ngắn, nhặt 3 collocation 10'", "m": 65, "w": "T7"}, {"d": "2027-01-09", "slot": "Tối", "t": "Nói 25' bấm giờ: Speaking Sample + Listen, Then Speak · Shadowing 10' · Sổ lỗi 10'", "m": 45, "w": "T7"}, {"d": "2027-01-10", "slot": "CN", "t": "Sổ Từ 15' (chỉ ôn) · Cập nhật tab Theo tuần: % xong, điều chỉnh tuần sau 10'", "m": 25, "w": "T7"}, {"d": "2027-01-11", "slot": "Sáng", "t": "THI THỬ: Arno full test – làm như thi thật, không dừng 60' · Ghi điểm vào Tổng quan, tìm 3 dạng mất điểm nhiều nhất → Sổ lỗi 40'", "m": 100, "w": "T8"}, {"d": "2027-01-11", "slot": "Ban ngày", "t": "Sổ Từ 15' · Bộ hỗn hợp bấm giờ: Listen and Type + Read and Complete 30'", "m": 45, "w": "T8"}, {"d": "2027-01-11", "slot": "Tối", "t": "Ôn Sổ lỗi + khung nói 20'", "m": 20, "w": "T8"}, {"d": "2027-01-12", "slot": "Ban ngày", "t": "Sổ Từ 15' · Bộ hỗn hợp bấm giờ: Interactive Reading 1 bài + Fill in the Blanks 30'", "m": 45, "w": "T8"}, {"d": "2027-01-12", "slot": "Tối", "t": "Nói 15' bấm giờ (dạng yếu nhất trong bài thi thử) · Sổ lỗi 10'", "m": 25, "w": "T8"}, {"d": "2027-01-13", "slot": "Sáng", "t": "Full phần Speaking + Writing bấm giờ (chỉ phần sản sinh) 50' · Nghe lại, sửa 3 lỗi lớn nhất 30'", "m": 80, "w": "T8"}, {"d": "2027-01-13", "slot": "Ban ngày", "t": "Sổ Từ 15' · Bộ hỗn hợp bấm giờ: Listen and Type + Fill in the Blanks 30'", "m": 45, "w": "T8"}, {"d": "2027-01-13", "slot": "Tối", "t": "Ôn Sổ lỗi + khung nói 20'", "m": 20, "w": "T8"}, {"d": "2027-01-14", "slot": "Ban ngày", "t": "Sổ Từ 15' · Bộ hỗn hợp bấm giờ: Interactive Reading 1 bài + Read and Complete 30'", "m": 45, "w": "T8"}, {"d": "2027-01-14", "slot": "Tối", "t": "Nói 15' bấm giờ (dạng yếu nhất trong bài thi thử) · Sổ lỗi 10'", "m": 25, "w": "T8"}, {"d": "2027-01-15", "slot": "Sáng", "t": "THI THỬ: DET Practice Test (chính thức) – làm như thi thật, không dừng 60' · Ghi điểm vào Tổng quan, tìm 3 dạng mất điểm nhiều nhất → Sổ lỗi 40'", "m": 100, "w": "T8"}, {"d": "2027-01-15", "slot": "Ban ngày", "t": "Sổ Từ 15' · Bộ hỗn hợp bấm giờ: Listen and Type + Interactive Listening (chỉ nghe + ghi ý) 30'", "m": 45, "w": "T8"}, {"d": "2027-01-15", "slot": "Tối", "t": "Ôn Sổ lỗi + khung nói 20'", "m": 20, "w": "T8"}, {"d": "2027-01-16", "slot": "Ban ngày", "t": "Sổ Từ 15' · Bộ hỗn hợp bấm giờ: Interactive Reading 1 bài + Listen and Type 30'", "m": 45, "w": "T8"}, {"d": "2027-01-16", "slot": "Tối", "t": "Nói 15' bấm giờ (dạng yếu nhất trong bài thi thử) · Sổ lỗi 10'", "m": 25, "w": "T8"}, {"d": "2027-01-17", "slot": "CN", "t": "Sổ Từ 15' (chỉ ôn) · Cập nhật tab Theo tuần: % xong, điều chỉnh tuần sau 10'", "m": 25, "w": "T8"}, {"d": "2027-01-18", "slot": "Sáng", "t": "Khởi động nhẹ: mỗi dạng nói/viết 1 lượt, không bấm giờ 40' · Kiểm tra máy, mic, phòng, giấy tờ 20'", "m": 60, "w": "T9"}, {"d": "2027-01-18", "slot": "Ban ngày", "t": "Sổ Từ 15' (chỉ ôn)", "m": 15, "w": "T9"}, {"d": "2027-01-18", "slot": "Tối", "t": "Đọc lại Sổ lỗi + khung nói 20'", "m": 20, "w": "T9"}, {"d": "2027-01-19", "slot": "Ban ngày", "t": "Sổ Từ 15' · Listen and Type 10'", "m": 25, "w": "T9"}, {"d": "2027-01-19", "slot": "Tối", "t": "Xem lại khung nói 10'. Ngủ sớm", "m": 10, "w": "T9"}, {"d": "2027-01-20", "slot": "Sáng", "t": "THI THẬT DET (khởi động 15' trước: nói 1 đề Photo)", "m": 75, "w": "T9"}, {"d": "2027-01-21", "slot": "Tối", "t": "Nghỉ", "m": 0, "w": "T9"}, {"d": "2027-01-22", "slot": "Tối", "t": "Nhận kết quả → ghi vào Tổng quan. Nếu cần thi lại: ghi 3 dạng bài yếu nhất", "m": 15, "w": "T9"}];
-const WEEKS = [{"id": "T0", "start": "2026-11-19", "end": "2026-11-22", "range": "19–22/11", "phase": "Khởi động", "focus": "Phá băng phần nói, lập Sổ lỗi, làm quen khung trả lời", "mock": ""}, {"id": "T1", "start": "2026-11-23", "end": "2026-11-29", "range": "23–29/11", "phase": "Giai đoạn 1 · Nền tảng", "focus": "Khung nói không bấm giờ; chép chính tả 3 lượt; collocation", "mock": "Arno 23/11"}, {"id": "T2", "start": "2026-11-30", "end": "2026-12-06", "range": "30/11–6/12", "phase": "Giai đoạn 1 · Nền tảng", "focus": "Nói theo khung trôi hơn (4-3-2); sửa lỗi gốc ngữ pháp/collocation", "mock": ""}, {"id": "T3", "start": "2026-12-07", "end": "2026-12-13", "range": "7–13/12", "phase": "Giai đoạn 1 · Nền tảng", "focus": "Củng cố; bắt đầu bấm giờ nhẹ cuối tuần", "mock": "DET Practice 7/12"}, {"id": "T4", "start": "2026-12-14", "end": "2026-12-20", "range": "14–20/12", "phase": "Giai đoạn 2 · Tăng tốc", "focus": "Tất cả bấm giờ như thi; nói mỗi tối T3-5-7", "mock": ""}, {"id": "T5", "start": "2026-12-21", "end": "2026-12-27", "range": "21–27/12", "phase": "Giai đoạn 2 · Tăng tốc", "focus": "Full bộ Interactive Speaking/Listening; checklist khi nghe lại", "mock": "Arno 21/12"}, {"id": "T6", "start": "2026-12-28", "end": "2027-01-03", "range": "28/12–3/1", "phase": "Giai đoạn 2 · Tăng tốc", "focus": "Đăng ký thi nếu đạt mốc; bù dạng yếu", "mock": "DET Practice 28/12"}, {"id": "T7", "start": "2027-01-04", "end": "2027-01-10", "range": "4–10/1", "phase": "Giai đoạn 2 · Tăng tốc", "focus": "Luyện dạng mất điểm nhiều nhất từ 2 bài thi thử", "mock": "Arno 4/1"}, {"id": "T8", "start": "2027-01-11", "end": "2027-01-17", "range": "11–17/1", "phase": "Giai đoạn 3 · Về đích", "focus": "Thi thử + giảm tải; giữ phong độ", "mock": "Arno 11/1, Practice 15/1"}, {"id": "T9", "start": "2027-01-18", "end": "2027-01-22", "range": "18–22/1", "phase": "Giai đoạn 3 · Về đích", "focus": "Khởi động nhẹ, thi thật 20/1", "mock": "THI THẬT 20/1"}];
+/* =====================================================================
+   1. DỮ LIỆU CỐ ĐỊNH (không lưu, sửa trực tiếp ở đây)
+   ===================================================================== */
+
+/* Mẫu nhiệm vụ: mã → [số phút, nội dung]. Các ý cách nhau bằng " · ".
+   Tiền tố mã: s = Sáng, b = Ban ngày, t = Tối, c = Chủ nhật. */
+const TASKS = {
+  s1: [60, "Làm quen khung nói: 3 đề Photo + 2 đề Read, Then Speak, ghi âm 40' · Chép 10 lỗi hay mắc vào Sổ lỗi 20'"],
+  s2: [100, "THI THỬ: Arno full test – làm như thi thật, không dừng 60' · Ghi điểm vào tab Thi thử, tìm 3 dạng mất điểm nhiều nhất → Sổ lỗi 40'"],
+  s3: [120, "Speaking Sample + Listen, Then Speak 2 đề, kỹ thuật 4-3-2 60' · Writing Sample 1 bài 30' · Gemini chấm + Sổ lỗi 30'"],
+  s4: [120, "Interactive Speaking 1 bộ (mỗi câu: Trả lời – Vì sao – Ví dụ) 40' · Interactive Listening (Listen and Respond + Summarize) 40' · Write About the Photo ×3 20' · Sổ lỗi 20'"],
+  s5: [120, "Ôn khung nói 10' · Speak About the Photo + Read, Then Speak 3 đề (dàn ý 3 ô → nói → nghe lại → nói lại) 50' · Write About the Photo ×3 + Interactive Writing 1 bài 40' · Chữa → Sổ lỗi 20'"],
+  s6: [100, "THI THỬ: DET Practice Test (chính thức, miễn phí) – làm như thi thật, không dừng 60' · Ghi điểm vào tab Thi thử, tìm 3 dạng mất điểm nhiều nhất → Sổ lỗi 40'"],
+  s7: [120, "Speaking bấm giờ như thi: Photo ×3 + Read, Then Speak ×3 → nghe lại theo checklist 60' · Writing bấm giờ: Photo ×3 + Interactive Writing 40' · Chữa → Sổ lỗi 20'"],
+  s8: [120, "Speaking Sample + Listen, Then Speak ×2 bấm giờ, mỗi đề nói 2 lần 50' · Writing Sample bấm giờ 30' · Interactive Listening 1 bộ 20' · Gemini chấm + Sổ lỗi 20'"],
+  s9: [120, "Interactive Speaking full bộ bấm giờ 40' · Interactive Listening ×2 bộ 40' · Write About the Photo ×3 bấm giờ 20' · Sổ lỗi 20'"],
+  s10: [100, "THI THỬ: DET Practice Test (chính thức) → quyết định đăng ký – làm như thi thật, không dừng 60' · Ghi điểm vào tab Thi thử, tìm 3 dạng mất điểm nhiều nhất → Sổ lỗi 40'"],
+  s11: [80, "Full phần Speaking + Writing bấm giờ (chỉ phần sản sinh) 50' · Nghe lại, sửa 3 lỗi lớn nhất 30'"],
+  s12: [100, "THI THỬ: DET Practice Test (chính thức) – làm như thi thật, không dừng 60' · Ghi điểm vào tab Thi thử, tìm 3 dạng mất điểm nhiều nhất → Sổ lỗi 40'"],
+  s13: [60, "Khởi động nhẹ: mỗi dạng nói/viết 1 lượt, không bấm giờ 40' · Kiểm tra máy, mic, phòng, giấy tờ 20'"],
+  s14: [75, "THI THẬT DET (khởi động 15' trước: nói 1 đề Photo)"],
+  b1: [30, "Sổ Từ 15' · Đọc tab Phương pháp 15'"],
+  b2: [35, "Sổ Từ 15' · Listen and Type chép 3 lượt 20'"],
+  b3: [40, "Sổ Từ 15' · Interactive Reading 1 bài 25'"],
+  b4: [55, "Sổ Từ 15' · Listen and Type (chép 3 lượt, phân loại lỗi) 20' · Read and Complete 20' (ghi câu sai vào Sổ lỗi)"],
+  b5: [55, "Sổ Từ 15' · Interactive Reading 1 bài (không bấm giờ) 20' · Fill in the Blanks 20' (ghi câu sai vào Sổ lỗi)"],
+  b6: [55, "Sổ Từ 15' · Listen and Type (chép 3 lượt, phân loại lỗi) 20' · Fill in the Blanks 20' (ghi câu sai vào Sổ lỗi)"],
+  b7: [55, "Sổ Từ 15' · Interactive Reading 1 bài (không bấm giờ) 20' · Read and Complete 20' (ghi câu sai vào Sổ lỗi)"],
+  b8: [55, "Sổ Từ 15' · Listen and Type (chép 3 lượt, phân loại lỗi) 20' · Interactive Listening (chỉ nghe + ghi ý) 20' (ghi câu sai vào Sổ lỗi)"],
+  b9: [55, "Sổ Từ 15' · Interactive Reading 1 bài (không bấm giờ) 20' · Listen and Type 20' (ghi câu sai vào Sổ lỗi)"],
+  b10: [65, "Sổ Từ 15' · Listen and Type bấm giờ 20' · Read and Complete bấm giờ 20' · Đọc 1 đoạn ngắn, nhặt 3 collocation 10'"],
+  b11: [65, "Sổ Từ 15' · Interactive Reading 1 bài bấm giờ 20' · Fill in the Blanks bấm giờ 20' · Đọc 1 đoạn ngắn, nhặt 3 collocation 10'"],
+  b12: [65, "Sổ Từ 15' · Listen and Type bấm giờ 20' · Fill in the Blanks bấm giờ 20' · Đọc 1 đoạn ngắn, nhặt 3 collocation 10'"],
+  b13: [65, "Sổ Từ 15' · Interactive Reading 1 bài bấm giờ 20' · Read and Complete bấm giờ 20' · Đọc 1 đoạn ngắn, nhặt 3 collocation 10'"],
+  b14: [65, "Sổ Từ 15' · Listen and Type bấm giờ 20' · Interactive Listening (chỉ nghe + ghi ý) bấm giờ 20' · Đọc 1 đoạn ngắn, nhặt 3 collocation 10'"],
+  b15: [65, "Sổ Từ 15' · Interactive Reading 1 bài bấm giờ 20' · Listen and Type bấm giờ 20' · Đọc 1 đoạn ngắn, nhặt 3 collocation 10'"],
+  b16: [45, "Sổ Từ 15' · Bộ hỗn hợp bấm giờ: Listen and Type + Read and Complete 30'"],
+  b17: [45, "Sổ Từ 15' · Bộ hỗn hợp bấm giờ: Interactive Reading 1 bài + Fill in the Blanks 30'"],
+  b18: [45, "Sổ Từ 15' · Bộ hỗn hợp bấm giờ: Listen and Type + Fill in the Blanks 30'"],
+  b19: [45, "Sổ Từ 15' · Bộ hỗn hợp bấm giờ: Interactive Reading 1 bài + Read and Complete 30'"],
+  b20: [45, "Sổ Từ 15' · Bộ hỗn hợp bấm giờ: Listen and Type + Interactive Listening (chỉ nghe + ghi ý) 30'"],
+  b21: [45, "Sổ Từ 15' · Bộ hỗn hợp bấm giờ: Interactive Reading 1 bài + Listen and Type 30'"],
+  b22: [15, "Sổ Từ 15' (chỉ ôn)"],
+  b23: [25, "Sổ Từ 15' · Listen and Type 10'"],
+  t1: [15, "Phá băng: ghi âm 1 đề Speak About the Photo theo khung 3 phần (60s). Không ai nghe, không chấm 15'"],
+  t2: [15, "Nghe lại bản ghi sáng, tìm đúng 1 chỗ rối, nói lại đề đó 15'"],
+  t3: [15, "Interactive Speaking 3 câu (Trả lời – Vì sao – Ví dụ), ghi âm 15'"],
+  t4: [30, "Ôn Sổ lỗi 10' · Đưa từ/collocation mới vào Sổ Từ 10' · Shadow 5 câu Listen and Type nghe sai 10'"],
+  t5: [35, "Nói 15' không bấm giờ: Speak About the Photo ×3 – ghi âm → nghe → nói lại · Shadowing 10' câu nghe sai · Viết lại câu đúng trong Sổ lỗi 10'"],
+  t6: [35, "Nói 15' không bấm giờ: Read, Then Speak ×3 – ghi âm → nghe → nói lại · Shadowing 10' câu nghe sai · Viết lại câu đúng trong Sổ lỗi 10'"],
+  t7: [35, "Nói 15' không bấm giờ: Interactive Speaking 5 câu – ghi âm → nghe → nói lại · Shadowing 10' câu nghe sai · Viết lại câu đúng trong Sổ lỗi 10'"],
+  t8: [40, "Nói 20' không bấm giờ: Speak About the Photo ×3 – ghi âm → nghe → nói lại · Shadowing 10' câu nghe sai · Viết lại câu đúng trong Sổ lỗi 10'"],
+  t9: [40, "Nói 20' không bấm giờ: Read, Then Speak ×3 – ghi âm → nghe → nói lại · Shadowing 10' câu nghe sai · Viết lại câu đúng trong Sổ lỗi 10'"],
+  t10: [40, "Nói 20' không bấm giờ: Interactive Speaking 5 câu – ghi âm → nghe → nói lại · Shadowing 10' câu nghe sai · Viết lại câu đúng trong Sổ lỗi 10'"],
+  t11: [45, "Nói 25' bấm giờ: Photo + Read, Then Speak · Shadowing 10' · Sổ lỗi 10'"],
+  t12: [45, "Nói 25' bấm giờ: Interactive Speaking · Shadowing 10' · Sổ lỗi 10'"],
+  t13: [45, "Nói 25' bấm giờ: Speaking Sample + Listen, Then Speak · Shadowing 10' · Sổ lỗi 10'"],
+  t14: [20, "Ôn Sổ lỗi + khung nói 20'"],
+  t15: [25, "Nói 15' bấm giờ (dạng yếu nhất trong bài thi thử) · Sổ lỗi 10'"],
+  t16: [20, "Đọc lại Sổ lỗi + khung nói 20'"],
+  t17: [10, "Xem lại khung nói 10'. Ngủ sớm"],
+  t18: [0, "Nghỉ"],
+  t19: [15, "Nhận kết quả → ghi vào tab Thi thử. Nếu cần thi lại: ghi 3 dạng bài yếu nhất"],
+  c1: [15, "Sổ Từ 15' (chỉ ôn)"],
+  c2: [25, "Sổ Từ 15' (chỉ ôn) · Cập nhật tab Lộ trình: % xong, điều chỉnh tuần sau 10'"],
+};
+const WEEKS = [
+  {id: "T0", start: "2026-11-19", phase: "Khởi động", focus: "Phá băng phần nói, lập Sổ lỗi, làm quen khung trả lời",
+   days: [[0,"b1","t1"], ["s1","b2","t2"], [0,"b3","t3"], "c1"]},
+  {id: "T1", start: "2026-11-23", phase: "Giai đoạn 1 · Nền tảng", focus: "Khung nói không bấm giờ; chép chính tả 3 lượt; collocation", mock: "Arno 23/11",
+   days: [["s2","b4","t4"], [0,"b5","t5"], ["s3","b6","t4"], [0,"b7","t6"], ["s4","b8","t4"], [0,"b9","t7"], "c2"]},
+  {id: "T2", start: "2026-11-30", phase: "Giai đoạn 1 · Nền tảng", focus: "Nói theo khung trôi hơn (4-3-2); sửa lỗi gốc ngữ pháp/collocation",
+   days: [["s5","b4","t4"], [0,"b5","t8"], ["s3","b6","t4"], [0,"b7","t9"], ["s4","b8","t4"], [0,"b9","t10"], "c2"]},
+  {id: "T3", start: "2026-12-07", phase: "Giai đoạn 1 · Nền tảng", focus: "Củng cố; bắt đầu bấm giờ nhẹ cuối tuần", mock: "DET Practice 7/12",
+   days: [["s6","b4","t4"], [0,"b5","t8"], ["s3","b6","t4"], [0,"b7","t9"], ["s4","b8","t4"], [0,"b9","t10"], "c2"]},
+  {id: "T4", start: "2026-12-14", phase: "Giai đoạn 2 · Tăng tốc", focus: "Tất cả bấm giờ như thi; nói mỗi tối T3-5-7",
+   days: [["s7","b10","t4"], [0,"b11","t11"], ["s8","b12","t4"], [0,"b13","t12"], ["s9","b14","t4"], [0,"b15","t13"], "c2"]},
+  {id: "T5", start: "2026-12-21", phase: "Giai đoạn 2 · Tăng tốc", focus: "Full bộ Interactive Speaking/Listening; checklist khi nghe lại", mock: "Arno 21/12",
+   days: [["s2","b10","t4"], [0,"b11","t11"], ["s8","b12","t4"], [0,"b13","t12"], ["s9","b14","t4"], [0,"b15","t13"], "c2"]},
+  {id: "T6", start: "2026-12-28", phase: "Giai đoạn 2 · Tăng tốc", focus: "Đăng ký thi nếu đạt mốc; bù dạng yếu", mock: "DET Practice 28/12",
+   days: [["s10","b10","t4"], [0,"b11","t11"], ["s8","b12","t4"], [0,"b13","t12"], ["s9","b14","t4"], [0,"b15","t13"], "c2"]},
+  {id: "T7", start: "2027-01-04", phase: "Giai đoạn 2 · Tăng tốc", focus: "Luyện dạng mất điểm nhiều nhất từ 2 bài thi thử", mock: "Arno 4/1",
+   days: [["s2","b10","t4"], [0,"b11","t11"], ["s8","b12","t4"], [0,"b13","t12"], ["s9","b14","t4"], [0,"b15","t13"], "c2"]},
+  {id: "T8", start: "2027-01-11", phase: "Giai đoạn 3 · Về đích", focus: "Thi thử + giảm tải; giữ phong độ", mock: "Arno 11/1, Practice 15/1",
+   days: [["s2","b16","t14"], [0,"b17","t15"], ["s11","b18","t14"], [0,"b19","t15"], ["s12","b20","t14"], [0,"b21","t15"], "c2"]},
+  {id: "T9", start: "2027-01-18", phase: "Giai đoạn 3 · Về đích", focus: "Khởi động nhẹ, thi thật 20/1", mock: "THI THẬT 20/1",
+   days: [["s13","b22","t16"], [0,"b23","t17"], ["s14",0,0], [0,0,"t18"], [0,0,"t19"]]},
+];
+/* Mỗi tuần: days[i] là ngày thứ i kể từ start.
+   Mảng [Sáng, Ban ngày, Tối] (0 = trống); một chuỗi đơn = buổi Chủ nhật. */
+
 const MOCKS = [{"id": "m1", "d": "2026-11-23", "src": "Arno full test", "note": "Chẩn đoán – chỉ là dữ liệu"}, {"id": "m2", "d": "2026-12-07", "src": "DET Practice Test", "note": ""}, {"id": "m3", "d": "2026-12-21", "src": "Arno full test", "note": ""}, {"id": "m4", "d": "2026-12-28", "src": "DET Practice Test", "note": "Mốc quyết định đăng ký"}, {"id": "m5", "d": "2027-01-04", "src": "Arno full test", "note": ""}, {"id": "m6", "d": "2027-01-11", "src": "Arno full test", "note": ""}, {"id": "m7", "d": "2027-01-15", "src": "DET Practice Test", "note": ""}, {"id": "m8", "d": "2027-01-20", "src": "THI THẬT", "note": ""}];
 const CHECKPOINTS = [{"d": "2026-11-23", "title": "Thi thử chẩn đoán", "fail": "Không có \"chưa đạt\": chỉ ghi điểm, không tự phán xét", "pass": "Có đủ điểm 4 kỹ năng"}, {"d": "2026-12-07", "title": "Hết giai đoạn 1", "fail": "Kéo dài giai đoạn 1 thêm 1 tuần cho phần nói; giảm Writing xuống 1 buổi/tuần", "pass": "Nói đủ 3 phần của khung mà không rối ở ~8/10 đề; xong ≥80% nhiệm vụ"}, {"d": "2026-12-21", "title": "Giữa giai đoạn 2", "fail": "Tăng buổi tối T3-5-7 lên 60′, thêm 15′ nói", "pass": "Arno ≥115, Speaking tự chấm ≥100"}, {"d": "2026-12-28", "title": "Quyết định đăng ký", "fail": "Lùi ngày thi 1–2 tuần nếu hạn nộp hồ sơ cho phép", "pass": "Practice Test ≥115 hoặc Arno ≥118"}, {"d": "2027-01-11", "title": "Về đích", "fail": "Tuần 8 chỉ luyện 2 dạng mất điểm nhiều nhất", "pass": "2 bài thi thử liên tiếp ≥120"}];
-const METHODS = [{"k": "Speak About the Photo", "p": "Nói được vài câu rồi rối", "h": "Lúc chuẩn bị chỉ ghi 3 ô từ khóa. Ghi âm → nghe lại → nói lại cùng đề", "t": "Tổng quan 1 câu → 3 chi tiết theo một hướng (trái→phải hoặc gần→xa) → đoán bối cảnh/cảm xúc → 1 câu chốt"}, {"k": "Read, Then Speak · Listen, Then Speak · Speaking Sample", "p": "Không sắp xếp được ý, càng nói càng rối", "h": "Kỹ thuật 4-3-2: nói cùng một đề 3 lần, mỗi lần ngắn hơn (90s → 60s → 45s). Lần sau gọn và mạch lạc hơn lần trước", "t": "Trả lời thẳng → Lý do 1 + ví dụ → Lý do 2 + ví dụ → chốt lại. Dùng cố định một bộ từ nối: First of all… / For example… / On top of that… / So overall…"}, {"k": "Interactive Speaking", "p": "Áp lực, không biết nói gì thêm", "h": "Mỗi câu đúng 3 nhịp, luyện tới mức phản xạ", "t": "Trả lời – Vì sao – Ví dụ cụ thể (tên, thời gian, nơi chốn). Bí thì dùng câu đệm: \"That's an interesting question. I'd say…\""}, {"k": "Phần nói nói chung", "p": "Không thoải mái khi nói, khó bắt đầu", "h": "Mức tối thiểu: 1 bản ghi/ngày, không ai nghe. Chỉ nghe lại 1 lần để tìm đúng 1 lỗi. Tính số bản ghi trong tuần, không chấm điểm", "t": "Trong 30s chuẩn bị luôn viết ra 3 từ khóa; nhìn vào đó mà nói"}, {"k": "Listen and Type", "p": "Gặp từ lạ là mất cả câu", "h": "Chép chính tả 3 lượt: (1) nghe và gõ, (2) nghe lại và sửa, (3) xem đáp án, phân loại lỗi: từ mới / nối âm / từ nhỏ (a, the, -s, -ed). Từ mới → Sổ Từ; buổi tối shadow lại câu đó", "t": "Đừng dừng ở chỗ không nghe được: giữ khung câu, gõ phần còn lại, rồi đoán chỗ trống theo ngữ pháp (mạo từ, số nhiều, thì)"}, {"k": "Fill in the Blanks · Read and Complete · Complete the Sentences", "p": "Biết từ mà không nghĩ ra; hoặc không biết từ", "h": "Học collocation theo cả cụm/câu trong Sổ Từ, ôn ở chế độ gõ lại (nhớ chủ động). Mỗi ngày đọc 10' và nhặt 3 cụm", "t": "Trước khi đoán, xác định từ loại cần điền và nhìn từ đứng trước/sau; kiểm tra số ít/nhiều và thì"}, {"k": "Writing (Photo, Interactive, Sample)", "p": "Sai mạo từ, giới từ, thì, collocation", "h": "Giữ phong độ; Gemini chấm, chép lỗi vào Sổ lỗi", "t": "Soát 4 điểm trước khi nộp: thì hiện tại khi tả ảnh · a/an/the · giới từ · chính tả từ thông dụng"}, {"k": "Thi thử", "p": "Sợ thi thử", "h": "Coi là dữ liệu, không phải bản án. Chỉ ghi điểm + 3 dạng mất điểm nhiều nhất", "t": "So với chính mình lần trước, không so với 120"}];
+const METHODS = [{"k": "Speak About the Photo", "p": "Nói được vài câu rồi rối", "h": "Lúc chuẩn bị chỉ ghi 3 ô từ khóa. Ghi âm → nghe lại → nói lại cùng đề", "t": "Tổng quan 1 câu → 3 chi tiết theo một hướng (trái→phải hoặc gần→xa) → đoán bối cảnh/cảm xúc → 1 câu chốt"}, {"k": "Read, Then Speak · Listen, Then Speak · Speaking Sample", "p": "Không sắp xếp được ý, càng nói càng rối", "h": "Kỹ thuật 4-3-2: nói cùng một đề 3 lần, mỗi lần ngắn hơn (90s → 60s → 45s). Lần sau gọn và mạch lạc hơn lần trước", "t": "Trả lời thẳng → Lý do 1 + ví dụ → Lý do 2 + ví dụ → chốt lại. Dùng cố định một bộ từ nối: First of all… / For example… / On top of that… / So overall…"}, {"k": "Interactive Speaking", "p": "Áp lực, không biết nói gì thêm", "h": "Mỗi câu đúng 3 nhịp, luyện tới mức phản xạ", "t": "Trả lời – Vì sao – Ví dụ cụ thể (tên, thời gian, nơi chốn). Bí thì dùng câu đệm: \"That's an interesting question. I'd say…\""}, {"k": "Phần nói nói chung", "p": "Không thoải mái khi nói, khó bắt đầu", "h": "Mức tối thiểu: 1 bản ghi/ngày, không ai nghe. Chỉ nghe lại 1 lần để tìm đúng 1 lỗi. Tính số bản ghi trong tuần, không chấm điểm", "t": "Trong 30s chuẩn bị luôn viết ra 3 từ khóa; nhìn vào đó mà nói"}, {"k": "Listen and Type", "p": "Gặp từ lạ là mất cả câu", "h": "Chép chính tả 3 lượt: (1) nghe và gõ, (2) nghe lại và sửa, (3) xem đáp án, phân loại lỗi: từ mới / nối âm / từ nhỏ (a, the, -s, -ed). Từ mới → Sổ Từ; buổi tối shadow lại câu đó", "t": "Đừng dừng ở chỗ không nghe được: giữ khung câu, gõ phần còn lại, rồi đoán chỗ trống theo ngữ pháp (mạo từ, số nhiều, thì)"}, {"k": "Fill in the Blanks · Read and Complete · Complete the Sentences", "p": "Biết từ mà không nghĩ ra; hoặc không biết từ", "h": "Học collocation theo cả cụm/câu trong Sổ Từ, ôn ở chế độ gõ lại (nhớ chủ động). Mỗi ngày đọc 10' và nhặt 3 cụm", "t": "Trước khi đoán, xác định từ loại cần điền và nhìn từ đứng trước/sau; kiểm tra số ít/nhiều và thì"}, {"k": "Writing (Photo, Interactive, Sample)", "p": "Sai mạo từ, giới từ, thì, collocation", "h": "Giữ phong độ; Gemini chấm, chép lỗi vào Sổ lỗi", "t": "Soát 4 điểm trước khi nộp: thì hiện tại khi tả ảnh · a/an/the · giới từ · chính tả từ thông dụng"}, {"k": "Sổ lỗi", "p": "Ghi nhiều mà không biết ôn sao cho hết", "h": "Không ôn cả sổ. Mỗi ngày chỉ ôn các câu đến hạn, tối đa 20 câu (~10′). Che đáp án, tự sửa câu sai, rồi mới xem. Nhớ chắc → câu đó giãn ra 2, 4, 8, 16, 32 ngày; quên → mai gặp lại", "t": "Ghi lỗi kèm 1 dòng \"vì sao sai\" (quy tắc). Ôn quy tắc giúp sửa cả nhóm lỗi, không chỉ một câu"}, {"k": "Thi thử", "p": "Sợ thi thử", "h": "Coi là dữ liệu, không phải bản án. Chỉ ghi điểm + 3 dạng mất điểm nhiều nhất", "t": "So với chính mình lần trước, không so với 120"}];
 const ERRTYPES = ["Collocation","Dạng từ","Thì","Mạo từ","Giới từ","Cấu trúc câu","Từ mới","Nghe không ra","Chính tả","Sắp xếp ý (nói)"];
 const QTYPES = ["Read and Select","Fill in the Blanks","Read and Complete","Listen and Type","Interactive Reading","Interactive Listening","Write About the Photo","Interactive Writing","Writing Sample","Speak About the Photo","Read, Then Speak","Listen, Then Speak","Speaking Sample","Interactive Speaking"];
 const DOW = ["CN","T2","T3","T4","T5","T6","T7"];
+const SLOTS = ["Sáng","Ban ngày","Tối"];
 const BASELINE = {date:"2026-09-28",src:"Arno (mốc ban đầu)",r:105,w:130,l:115,s:105};
 
-let state = {done:{}, mocks:{}, errors:[], weekNotes:{}, examDate:"2027-01-20"};
-let viewDate = null;
-let errFilter = "all";
-let db=null, docRef=null, saving=false, dirty=false, saveTimer=null, lastLocalEdit=0, mode="init";
+/* Ôn tập ngắt quãng: hộp 0–5. Nhớ chắc → lên 1 hộp, ôn lại sau INTV[hộp] ngày. */
+const DAILY = 20;                 // số câu tối đa nên ôn mỗi ngày
+const INTV = [1,2,4,8,16,32];
+const MAXBOX = 5;
 
+/* =====================================================================
+   2. TIỆN ÍCH
+   ===================================================================== */
 const $ = s=>document.querySelector(s);
-const esc = s=>String(s??"").replace(/[&<>"]/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]));
-const todayISO = ()=>{const d=new Date();return d.getFullYear()+"-"+String(d.getMonth()+1).padStart(2,"0")+"-"+String(d.getDate()).padStart(2,"0")};
-const parse = iso=>{const [y,m,d]=iso.split("-").map(Number);return new Date(y,m-1,d)};
-const fmt = iso=>{const d=parse(iso);return String(d.getDate()).padStart(2,"0")+"/"+String(d.getMonth()+1).padStart(2,"0")};
-const addDays=(iso,n)=>{const d=parse(iso);d.setDate(d.getDate()+n);return d.getFullYear()+"-"+String(d.getMonth()+1).padStart(2,"0")+"-"+String(d.getDate()).padStart(2,"0")};
-const tid = r=>r.d+"|"+r.slot;
-const slotCls = s=>"p-"+s.split(" ")[0];
+const esc = s=>String(s??"").replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));
+const iso = d=>d.getFullYear()+"-"+String(d.getMonth()+1).padStart(2,"0")+"-"+String(d.getDate()).padStart(2,"0");
+const todayISO = ()=>iso(new Date());
+const parse = s=>{const [y,m,d]=s.split("-").map(Number);return new Date(y,m-1,d)};
+const fmt = s=>{const d=parse(s);return String(d.getDate()).padStart(2,"0")+"/"+String(d.getMonth()+1).padStart(2,"0")};
+const addDays=(s,n)=>{const d=parse(s);d.setDate(d.getDate()+n);return iso(d)};
+const daysBetween=(a,b)=>Math.round((parse(b)-parse(a))/864e5);
+const uid=()=>Date.now().toString(36)+Math.random().toString(36).slice(2,6);
+function toast(m){const t=$("#toast");t.textContent=m;t.classList.add("on");clearTimeout(t._h);t._h=setTimeout(()=>t.classList.remove("on"),1800)}
 function splitTask(t){return t.split(" · ").map(x=>x.trim()).filter(Boolean)}
-function toast(m){const t=$("#toast");t.textContent=m;t.classList.add("on");clearTimeout(t._h);t._h=setTimeout(()=>t.classList.remove("on"),1600)}
+const slotCls = s=>"p-"+s.split(" ")[0];
 
-/* ---------- storage ---------- */
+/* Bung lịch: WEEKS + TASKS → PLAN (mỗi dòng = 1 buổi). Khoá tiến độ là "ngày|buổi". */
+const PLAN=[];
+for(const w of WEEKS){
+  w.end=addDays(w.start,w.days.length-1);
+  const a=parse(w.start),b=parse(w.end);
+  w.range=a.getMonth()===b.getMonth()?`${a.getDate()}–${b.getDate()}/${b.getMonth()+1}`:`${a.getDate()}/${a.getMonth()+1}–${b.getDate()}/${b.getMonth()+1}`;
+  w.days.forEach((day,i)=>{
+    const d=addDays(w.start,i);
+    const push=(slot,k)=>{const [m,t]=TASKS[k];PLAN.push({d,slot,t,m,w:w.id})};
+    if(typeof day==="string")push("CN",day);
+    else day.forEach((k,j)=>{if(k)push(SLOTS[j],k)});
+  });
+}
+const tid = r=>r.d+"|"+r.slot;
+
+/* =====================================================================
+   3. TRẠNG THÁI LƯU TRỮ (phiên bản 2)
+   {
+     v: 2,
+     settings: { examDate },
+     plan:     { done: {"ngày|buổi": true}, notes: {T1: "..."} },
+     mocks:    { m1: {o, r, w, l, s} },
+     errors:   [ {id, created, qtype, type, wrong, right, note,
+                  box, due, last, reps, lapses} ],
+     log:      { "ngày": {n: số câu đã ôn, ok: số câu nhớ chắc} }
+   }
+   ===================================================================== */
+const LS_KEY="det120v2", LS_OLD="det120", LS_BAK="det120.bak-v1", LS_PREFS="det120.prefs";
+function emptyState(){return {v:2,settings:{examDate:"2027-01-20"},plan:{done:{},notes:{}},mocks:{},errors:[],log:{}}}
+let state=emptyState();
+
+/* Đọc mọi dạng lỗi đã từng lưu: bản cũ {q,type,w,r}, bản thử {category,text,review}, bản mới. */
+function normErr(e){
+  e=e||{};const t=todayISO();
+  const box=Math.max(0,Math.min(MAXBOX,Number(e.box??e.review?.stage??0)||0));
+  const type=e.category?.error||(typeof e.type==="string"?e.type:"")||ERRTYPES[0];
+  return {
+    id:String(e.id||uid()),
+    created:e.created||e.d||t,
+    qtype:e.qtype||e.category?.task||e.q||QTYPES[0],
+    type,
+    wrong:String(e.wrong??e.text?.wrong??e.w??""),
+    right:String(e.right??e.text?.right??e.r??""),
+    note:String(e.note??""),
+    box,
+    due:e.due||e.review?.nextAt||e.d||t,
+    last:e.last||e.review?.lastAt||"",
+    reps:Number(e.reps)||(e.review?.lastAt?1:0),
+    lapses:Number(e.lapses)||0
+  };
+}
+function migrate(raw){
+  const s=emptyState();
+  if(!raw||typeof raw!=="object")return s;
+  if(raw.v===2){
+    s.settings.examDate=raw.settings?.examDate||s.settings.examDate;
+    s.plan.done=raw.plan?.done||{};s.plan.notes=raw.plan?.notes||{};
+    s.mocks=raw.mocks||{};s.log=raw.log||{};
+  }else{
+    s.settings.examDate=raw.examDate||s.settings.examDate;
+    s.plan.done=raw.done||{};s.plan.notes=raw.weekNotes||{};
+    s.mocks=raw.mocks||{};
+  }
+  s.errors=Array.isArray(raw.errors)?raw.errors.map(normErr):[];
+  return s;
+}
+function mergeState(cur,inc){
+  let added=0;
+  for(const k in inc.plan.done)if(inc.plan.done[k])cur.plan.done[k]=true;
+  for(const k in inc.plan.notes)if(!cur.plan.notes[k])cur.plan.notes[k]=inc.plan.notes[k];
+  for(const id in inc.mocks){const c=cur.mocks[id]||(cur.mocks[id]={});for(const k in inc.mocks[id])if(c[k]===undefined||c[k]==="")c[k]=inc.mocks[id][k]}
+  const byId=new Map(cur.errors.map(e=>[e.id,e]));
+  for(const e of inc.errors){const c=byId.get(e.id);if(!c){cur.errors.push(e);added++}else if((e.last||"")>(c.last||"")||e.reps>c.reps)Object.assign(c,e)}
+  for(const d in inc.log){const a=cur.log[d],b=inc.log[d];if(!a||b.n>a.n)cur.log[d]=b}
+  return added;
+}
+
+/* --- lưu trên máy --- */
+function lsGet(k){try{return localStorage.getItem(k)}catch(e){return null}}
+function lsSet(k,v){try{localStorage.setItem(k,v);return true}catch(e){return false}}
+let migratedNote="";
+function localLoad(){
+  const v2=lsGet(LS_KEY);
+  if(v2){try{return migrate(JSON.parse(v2))}catch(e){}}
+  const old=lsGet(LS_OLD);
+  if(old){
+    try{
+      const s=migrate(JSON.parse(old));
+      if(!lsGet(LS_BAK))lsSet(LS_BAK,old);       // giữ nguyên bản cũ để phòng hờ
+      migratedNote=`Đã chuyển dữ liệu cũ sang cấu trúc mới (${s.errors.length} lỗi, ${Object.keys(s.plan.done).length} buổi đã xong). Bản cũ vẫn được giữ.`;
+      lsSet(LS_KEY,JSON.stringify(s));
+      return s;
+    }catch(e){}
+  }
+  return null;
+}
+function localSave(){if(!lsSet(LS_KEY,JSON.stringify(state)))setSync("local","Không lưu được vào trình duyệt – hãy tải bản sao lưu")}
+let prefs={qtype:QTYPES[0],type:ERRTYPES[0]};
+try{Object.assign(prefs,JSON.parse(lsGet(LS_PREFS)||"{}"))}catch(e){}
+const savePrefs=()=>lsSet(LS_PREFS,JSON.stringify(prefs));
+
+/* --- đồng bộ đám mây (chỉ khi mở trong claude.ai) --- */
+let db=null, docRef=null, saving=false, dirty=false, saveTimer=null, lastLocalEdit=0;
 function setSync(kind,txt){$("#dot").className="dot "+kind;$("#synctxt").textContent=txt}
-function localLoad(){try{const s=localStorage.getItem("det120");if(s)return JSON.parse(s)}catch(e){}return null}
-function localSave(){try{localStorage.setItem("det120",JSON.stringify(state))}catch(e){}}
-function normalize(s){return Object.assign({done:{},mocks:{},errors:[],weekNotes:{},examDate:"2027-01-20"},s||{})}
 function changed(){lastLocalEdit=Date.now();localSave();dirty=true;if(db&&docRef){setSync("busy","Đang lưu…");clearTimeout(saveTimer);saveTimer=setTimeout(flush,700)}}
 async function flush(){
   if(!docRef||saving||!dirty)return;
@@ -173,44 +461,45 @@ async function flush(){
   }
   saving=false; if(dirty)flush();
 }
-async function initDb(){
-  const local=localLoad(); if(local)state=normalize(local);
+async function init(){
+  const local=localLoad(); if(local)state=local;
   render();
-  if(!window.claude||!window.claude.use){setSync("local","Lưu trên máy này");return}
+  if(migratedNote)setTimeout(()=>toast(migratedNote),300);
+  if(!window.claude||!window.claude.use){setSync("local","Lưu trên trình duyệt này");return}
   let timer=setTimeout(()=>setSync("local","Chưa kết nối được – đang lưu trên máy này"),10000);
   try{
     db=await window.claude.use("db"); const user=await window.claude.use("user");
-    const uid=user?await user.id():null;
-    if(!db||!uid){clearTimeout(timer);setSync("local","Lưu trên máy này (đăng nhập để đồng bộ)");db=null;return}
-    docRef=db.doc("data/users/"+uid+"/progress");
+    const id=user?await user.id():null;
+    if(!db||!id){clearTimeout(timer);setSync("local","Lưu trên máy này (đăng nhập để đồng bộ)");db=null;return}
+    docRef=db.doc("data/users/"+id+"/progress");
     docRef.onSnapshot(snap=>{
-      if(!snap.metadata.fromCache){clearTimeout(timer)}
+      if(!snap.metadata.fromCache)clearTimeout(timer);
       if(snap.metadata.hasPendingWrites)return;
       if(snap.exists){
         if(Date.now()-lastLocalEdit<3000||dirty||saving)return;
-        state=normalize(JSON.parse(JSON.stringify(snap.data())));localSave();render();
+        const raw=JSON.parse(JSON.stringify(snap.data()));
+        state=migrate(raw);localSave();render();
+        if(raw.v!==2){dirty=true;flush()}
         setSync("ok","Đã đồng bộ");
-      }else if(!snap.metadata.fromCache){
-        dirty=true;flush(); // first visit: push local copy
-        setSync("ok","Đã đồng bộ");
-      }
+      }else if(!snap.metadata.fromCache){dirty=true;flush();setSync("ok","Đã đồng bộ")}
     },err=>{clearTimeout(timer);setSync("local","Mất kết nối – đang lưu trên máy này");docRef=null});
   }catch(e){clearTimeout(timer);setSync("local","Lưu trên máy này")}
 }
 
-/* ---------- calc ---------- */
-function pctOf(rows){if(!rows.length)return 0;return rows.filter(r=>state.done[tid(r)]).length/rows.length}
-function minsOf(rows,onlyDone){return rows.reduce((a,r)=>a+((!onlyDone||state.done[tid(r)])?r.m:0),0)}
-function weekOf(iso){let w=WEEKS[0];for(const x of WEEKS)if(iso>=x.start)w=x;return w}
+/* =====================================================================
+   4. TÍNH TOÁN
+   ===================================================================== */
+const isDone=r=>!!state.plan.done[tid(r)];
+function pctOf(rows){if(!rows.length)return 0;return rows.filter(isDone).length/rows.length}
+function minsOf(rows,onlyDone){return rows.reduce((a,r)=>a+((!onlyDone||isDone(r))?r.m:0),0)}
+function weekOf(s){let w=WEEKS[0];for(const x of WEEKS)if(s>=x.start)w=x;return w}
 function streak(){
   let d=todayISO(),n=0;
-  const days=[...new Set(PLAN.map(r=>r.d))];
-  if(!PLAN.some(r=>r.d===d&&state.done[tid(r)]))d=addDays(d,-1);
-  while(days.includes(d)||d>=PLAN[0].d){
+  if(!PLAN.some(r=>r.d===d&&isDone(r)))d=addDays(d,-1);
+  while(d>=PLAN[0].d){
     const rows=PLAN.filter(r=>r.d===d);
-    if(!rows.length){d=addDays(d,-1);if(d<PLAN[0].d)break;continue}
-    if(rows.some(r=>state.done[tid(r)])){n++;d=addDays(d,-1)}else break;
-    if(d<PLAN[0].d)break;
+    if(!rows.length){d=addDays(d,-1);continue}
+    if(rows.some(isDone)){n++;d=addDays(d,-1)}else break;
   }
   return n;
 }
@@ -220,31 +509,91 @@ function latestMock(){
   return last;
 }
 
-/* ---------- views ---------- */
-function taskCard(r){
-  const id=tid(r),d=!!state.done[id];
+/* --- Sổ lỗi --- */
+const STATUS={new:"Mới",learning:"Đang nhớ",done:"Đã thuộc"};
+const errStatus=e=>e.box>=MAXBOX?"done":(e.reps?"learning":"new");
+function dueErrors(){const t=todayISO();return state.errors.filter(e=>e.due<=t).sort((a,b)=>a.due.localeCompare(b.due)||a.box-b.box||a.created.localeCompare(b.created))}
+const logToday=()=>state.log[todayISO()]||{n:0,ok:0};
+function plan4Today(){const due=dueErrors().length;const left=Math.max(0,DAILY-logToday().n);return {due,left,goal:Math.min(due,left)}}
+function nextDueDate(){const t=todayISO();let m=null;for(const e of state.errors)if(e.due>t&&(!m||e.due<m))m=e.due;return m}
+function schedule(e,g){
+  if(g==="again")return {box:0,days:1};
+  if(g==="hard")return {box:e.box,days:Math.max(1,Math.floor(INTV[e.box]/2))};
+  const box=Math.min(MAXBOX,e.box+1);return {box,days:INTV[box]};
+}
+const dayLabel=n=>n<=1?"mai":`${n} ngày`;
+
+/* So sánh từng từ (LCS) để tô chỗ sai/chỗ sửa. */
+function wordDiff(a,b){
+  const A=a.trim().split(/\s+/).filter(Boolean).slice(0,120),B=b.trim().split(/\s+/).filter(Boolean).slice(0,120);
+  const key=w=>w.toLowerCase().replace(/[.,!?;:"“”()]/g,"");
+  const n=A.length,m=B.length,L=Array.from({length:n+1},()=>new Uint16Array(m+1));
+  for(let i=n-1;i>=0;i--)for(let j=m-1;j>=0;j--)L[i][j]=key(A[i])===key(B[j])?L[i+1][j+1]+1:Math.max(L[i+1][j],L[i][j+1]);
+  const ka=new Array(n).fill(false),kb=new Array(m).fill(false);
+  let i=0,j=0;while(i<n&&j<m){if(key(A[i])===key(B[j])){ka[i]=kb[j]=true;i++;j++}else if(L[i+1][j]>=L[i][j+1])i++;else j++}
+  const wrap=(arr,keep,tag)=>{let out=[],run=[];const fl=()=>{if(run.length){out.push(`<${tag}>${esc(run.join(" "))}</${tag}>`);run=[]}};
+    arr.forEach((w,k)=>{if(keep[k]){fl();out.push(esc(w))}else run.push(w)});fl();return out.join(" ")};
+  const mg=[];i=0;j=0;
+  while(i<n||j<m){
+    if(i<n&&j<m&&key(A[i])===key(B[j])){mg.push(esc(B[j]));i++;j++}
+    else if(j>=m||(i<n&&L[i+1][j]>=L[i][j+1])){mg.push(`<del>${esc(A[i])}</del>`);i++}
+    else{mg.push(`<ins>${esc(B[j])}</ins>`);j++}
+  }
+  return {a:wrap(A,ka,"del"),b:wrap(B,kb,"ins"),m:mg.join(" "),same:L[0][0]===n&&n===m};
+}
+const normTxt=s=>s.toLowerCase().replace(/[’]/g,"'").replace(/[^\p{L}\p{N}' ]+/gu," ").replace(/\s+/g," ").trim();
+function pairHTML(e){
+  if(e.wrong&&e.right){const d=wordDiff(e.wrong,e.right);return `<div class="ln-w"><span>${d.a||"&nbsp;"}</span></div><div class="ln-r"><span>${d.b||"&nbsp;"}</span></div>`}
+  return (e.wrong?`<div class="ln-w"><span>${esc(e.wrong)}</span></div>`:"")+(e.right?`<div class="ln-r"><span>${esc(e.right)}</span></div>`:"");
+}
+const boxesHTML=e=>`<span class="boxes ${e.box>=MAXBOX?"full":""}" title="Hộp ${e.box}/${MAXBOX}">${Array.from({length:MAXBOX},(_,i)=>`<i class="${i<e.box?"on":""}"></i>`).join("")}</span>`;
+
+/* =====================================================================
+   5. GIAO DIỆN
+   ===================================================================== */
+let viewDate=null;
+/* trạng thái tạm của tab Sổ lỗi (không lưu) */
+const ef={q:"",status:"all",type:"all",limit:40};
+const draft={mode:"one",wrong:"",right:"",note:"",bulk:""};
+let editId=null, editDraft=null, pendingDel=null, pendingDelTimer=null;
+let session=null;
+
+function reviewCTA(compact){
+  if(!state.errors.length)return compact?"":`<div class="card"><b>Sổ lỗi đang trống.</b> <span class="muted">Sau mỗi buổi luyện, ghi 1–3 câu sai ở tab Sổ lỗi. Từ hôm sau, chúng sẽ xuất hiện ở đây để ôn.</span></div>`;
+  const p=plan4Today(),lt=logToday(),nd=nextDueDate();
+  let big,sub,acts="";
+  if(p.goal>0){big=`${p.goal} câu`;sub=`cần ôn hôm nay · khoảng ${Math.max(2,Math.round(p.goal*.5))} phút${p.due>p.goal?` · còn ${p.due-p.goal} câu dời sang mai`:""}`;acts=`<a class="btn pri" href="#review" data-start="due">Ôn ngay</a>`}
+  else if(p.due>0){big="Đủ rồi";sub=`Hôm nay đã ôn ${lt.n} câu. ${p.due} câu còn lại sẽ chia cho những ngày sau.`;acts=`<button class="btn" data-start="extra">Ôn thêm 10 câu</button>`}
+  else{big=lt.n?"Xong":"0 câu";sub=lt.n?`Đã ôn ${lt.n} câu hôm nay (${lt.ok} nhớ chắc).${nd?` Lượt sau: ${fmt(nd)}.`:""}`:`Không có câu nào đến hạn.${nd?` Lượt sau: ${fmt(nd)}.`:""}`}
+  return `<div class="card rv-hero"><div><div class="kpi"><div class="lab">Sổ lỗi hôm nay</div></div><div class="big mono">${big}</div><div class="sub">${sub}</div></div><div class="acts">${acts}</div></div>`;
+}
+
+function taskCard(r,goal){
+  const id=tid(r),d=isDone(r);
   const parts=splitTask(r.t);const mock=/THI THỬ|THI THẬT/.test(r.t);
+  const li=p=>esc(p)+((goal>0&&/^(Ôn|Đọc lại) Sổ lỗi/.test(p))?` <a class="lnk" href="#review" data-start="due">Ôn ngay · ${goal} câu</a>`:"");
   return `<div class="task ${d?"done":""}"><input type="checkbox" class="chk" data-id="${esc(id)}" ${d?"checked":""} aria-label="Đánh dấu xong">
   <div class="tbody"><div class="tmeta"><span class="pill ${slotCls(r.slot)}">${esc(r.slot)}</span>${mock?'<span class="pill tag-mock">Thi thử</span>':""}<span class="mins mono">${r.m}′</span></div>
-  <div class="ttext">${parts.length>1?"<ul>"+parts.map(p=>"<li>"+esc(p)+"</li>").join("")+"</ul>":esc(r.t)}</div></div></div>`;
+  <div class="ttext">${parts.length>1?"<ul>"+parts.map(p=>"<li>"+li(p)+"</li>").join("")+"</ul>":li(r.t)}</div></div></div>`;
 }
 function vToday(){
   const t=todayISO();
   if(!viewDate){viewDate=t<PLAN[0].d?PLAN[0].d:(t>PLAN[PLAN.length-1].d?PLAN[PLAN.length-1].d:t)}
   const rows=PLAN.filter(r=>r.d===viewDate);
-  const daysLeft=Math.round((parse(state.examDate)-parse(t))/864e5);
+  const daysLeft=daysBetween(t,state.settings.examDate);
   const all=pctOf(PLAN);const w=weekOf(viewDate);const wr=PLAN.filter(r=>r.w===w.id);
-  const lm=latestMock();
+  const lm=latestMock();const goal=viewDate===t?plan4Today().goal:0;
   const dLab=(viewDate===t?"Hôm nay":DOW[parse(viewDate).getDay()])+", "+fmt(viewDate);
   return `<div class="grid kpis">
-   <div class="card kpi"><div class="lab">Còn lại</div><div class="val mono">${daysLeft}</div><div class="sub">ngày tới ${fmt(state.examDate)}</div></div>
+   <div class="card kpi"><div class="lab">Còn lại</div><div class="val mono">${daysLeft}</div><div class="sub">ngày tới ${fmt(state.settings.examDate)}</div></div>
    <div class="card kpi"><div class="lab">Toàn lộ trình</div><div class="val mono">${Math.round(all*100)}%</div><div class="bar"><i style="width:${all*100}%"></i></div></div>
    <div class="card kpi"><div class="lab">Tuần ${esc(w.id)}</div><div class="val mono">${Math.round(pctOf(wr)*100)}%</div><div class="sub">${minsOf(wr,true)} / ${minsOf(wr)} phút</div></div>
    <div class="card kpi"><div class="lab">Chuỗi ngày</div><div class="val mono">${streak()}</div><div class="sub">${lm?"Thi thử gần nhất: <b class='mono'>"+lm.o+"</b>":"Mục tiêu: 120"}</div></div>
   </div>
+  <div style="margin-top:12px">${reviewCTA(true)}</div>
   <div class="dayhead"><h2>${dLab} <span class="muted" style="font-weight:600;font-size:14px">· ${esc(w.phase)}</span></h2>
    <div class="navbtns"><button class="btn sm" data-nav="-1" aria-label="Ngày trước">←</button>${viewDate!==t?'<button class="btn sm" data-nav="0">Hôm nay</button>':""}<button class="btn sm" data-nav="1" aria-label="Ngày sau">→</button></div></div>
-  ${rows.length?rows.map(taskCard).join(""):'<div class="card empty">Không có nhiệm vụ cho ngày này.</div>'}
+  ${rows.length?rows.map(r=>taskCard(r,goal)).join(""):'<div class="card empty">Không có nhiệm vụ cho ngày này.</div>'}
   <div class="note" style="margin-top:14px"><b>Ngày mệt?</b> Chỉ cần Sổ Từ 15′ + 1 bản ghi âm là vẫn giữ chuỗi. Trọng tâm tuần này: ${esc(w.focus)}.</div>`;
 }
 function vPlan(){
@@ -255,94 +604,292 @@ function vPlan(){
     const days=[...new Set(rows.map(r=>r.d))];
     const open=(t>=w.start&&t<=w.end)||(t<WEEKS[0].start&&w.id==="T0");
     out+=`<details class="card week" ${open?"open":""}><summary><span class="wk">${esc(w.id)}</span><div class="wmid"><b>${esc(w.range)}</b>${w.mock?' · <span class="muted">'+esc(w.mock)+'</span>':""}<div>${esc(w.focus)}</div><div class="bar" style="margin-top:6px"><i style="width:${p*100}%"></i></div></div><span class="wpct mono">${Math.round(p*100)}%</span></summary>
-    ${days.map(d=>{const dr=rows.filter(r=>r.d===d);return `<div class="drow ${d===t?"today":""}"><div class="dd">${fmt(d)}<small>${DOW[parse(d).getDay()]}</small></div><div>${dr.map(r=>{const id=tid(r),dn=!!state.done[id];return `<div class="mini ${dn?"done":""}"><input type="checkbox" class="chk" data-id="${esc(id)}" ${dn?"checked":""}><span><span class="pill ${slotCls(r.slot)}" style="font-size:11px">${esc(r.slot)}</span> ${esc(r.t)} <span class="mins mono">${r.m}′</span></span></div>`}).join("")}</div></div>`}).join("")}
-    <div style="border-top:1px solid var(--line);padding-top:10px;margin-top:4px"><label class="f">Tự đánh giá & điều chỉnh tuần sau</label><textarea data-wnote="${esc(w.id)}" placeholder="Tuần này làm được gì, vướng gì, tuần sau đổi gì…">${esc(state.weekNotes[w.id]||"")}</textarea></div>
+    ${days.map(d=>{const dr=rows.filter(r=>r.d===d);return `<div class="drow ${d===t?"today":""}"><div class="dd">${fmt(d)}<small>${DOW[parse(d).getDay()]}</small></div><div>${dr.map(r=>{const id=tid(r),dn=isDone(r);return `<div class="mini ${dn?"done":""}"><input type="checkbox" class="chk" data-id="${esc(id)}" ${dn?"checked":""} aria-label="${esc(r.slot)} ${fmt(d)}"><span><span class="pill ${slotCls(r.slot)}" style="font-size:11px">${esc(r.slot)}</span> ${esc(r.t)} <span class="mins mono">${r.m}′</span></span></div>`}).join("")}</div></div>`}).join("")}
+    <div style="border-top:1px solid var(--line);padding-top:10px;margin-top:4px"><label class="f" for="wn-${esc(w.id)}">Tự đánh giá & điều chỉnh tuần sau</label><textarea id="wn-${esc(w.id)}" data-wnote="${esc(w.id)}" placeholder="Tuần này làm được gì, vướng gì, tuần sau đổi gì…">${esc(state.plan.notes[w.id]||"")}</textarea></div>
     </details>`;
   }
   return `<h2 style="margin-top:4px">Lộ trình 9 tuần</h2>`+out;
 }
 function chartSVG(){
-  const pts=[{date:BASELINE.date,o:null,lbl:"28/9"}];
   const data=MOCKS.map(m=>({m,v:state.mocks[m.id]})).filter(x=>x.v&&x.v.o!==""&&x.v.o!=null&&!isNaN(Number(x.v.o)));
   if(!data.length)return `<div class="muted" style="font-size:14px">Nhập điểm Overall sau mỗi lần thi thử để thấy đường tiến độ.</div>`;
-  const W=600,H=200,pl=36,pr=14,pt=14,pb=28;
+  const W=600,H=200,pl=36,pr=14,pt=20,pb=28;
   const ys=data.map(x=>Number(x.v.o));const lo=Math.min(90,...ys)-5,hi=Math.max(130,...ys)+5;
   const X=i=>pl+(data.length===1?(W-pl-pr)/2:i*(W-pl-pr)/(data.length-1));const Y=v=>pt+(hi-v)*(H-pt-pb)/(hi-lo);
-  let g="";for(const v of [100,110,120,130]){if(v<lo||v>hi)continue;g+=`<line x1="${pl}" x2="${W-pr}" y1="${Y(v)}" y2="${Y(v)}" stroke="${v===120?"#1e5eff":"#e2e8f0"}" stroke-dasharray="${v===120?"4 4":"0"}"/><text x="${pl-6}" y="${Y(v)+4}" text-anchor="end" font-size="11" fill="#64748b" font-family="JetBrains Mono">${v}</text>`}
+  let g="";for(const v of [100,110,120,130]){if(v<lo||v>hi)continue;g+=`<line class="${v===120?"goal":"grid-l"}" x1="${pl}" x2="${W-pr}" y1="${Y(v)}" y2="${Y(v)}"/><text class="axis" x="${pl-6}" y="${Y(v)+4}" text-anchor="end">${v}</text>`}
   const path=data.map((x,i)=>(i?"L":"M")+X(i)+" "+Y(Number(x.v.o))).join(" ");
-  const dots=data.map((x,i)=>`<circle cx="${X(i)}" cy="${Y(Number(x.v.o))}" r="4.5" fill="#1e5eff"/><text x="${X(i)}" y="${Y(Number(x.v.o))-10}" text-anchor="middle" font-size="12" font-weight="700" fill="#0f172a" font-family="JetBrains Mono">${Number(x.v.o)}</text><text x="${X(i)}" y="${H-8}" text-anchor="middle" font-size="11" fill="#64748b">${fmt(x.m.d)}</text>`).join("");
-  return `<svg class="chart" viewBox="0 0 ${W} ${H}" role="img" aria-label="Điểm overall các lần thi thử">${g}<path d="${path}" fill="none" stroke="#1e5eff" stroke-width="2.5" stroke-linejoin="round"/>${dots}</svg>`;
+  const dots=data.map((x,i)=>`<circle class="pt" cx="${X(i)}" cy="${Y(Number(x.v.o))}" r="4.5"/><text class="val" x="${X(i)}" y="${Y(Number(x.v.o))-10}" text-anchor="middle">${Number(x.v.o)}</text><text class="axis" x="${X(i)}" y="${H-8}" text-anchor="middle">${fmt(x.m.d)}</text>`).join("");
+  return `<svg class="chart" viewBox="0 0 ${W} ${H}" role="img" aria-label="Điểm overall các lần thi thử">${g}<path class="ln" d="${path}"/>${dots}</svg>`;
 }
 function vScores(){
   const t=todayISO();
-  const rows=MOCKS.map(m=>{const v=state.mocks[m.id]||{};const f=k=>`<input class="num" inputmode="numeric" data-mock="${m.id}" data-k="${k}" value="${esc(v[k]??"")}">`;
+  const rows=MOCKS.map(m=>{const v=state.mocks[m.id]||{};const f=k=>`<input class="num" id="mk-${m.id}-${k}" inputmode="numeric" data-mock="${m.id}" data-k="${k}" value="${esc(v[k]??"")}" aria-label="${k}">`;
     return `<tr><td class="mono" style="white-space:nowrap">${fmt(m.d)}</td><td style="min-width:130px">${esc(m.src)}${m.note?'<div class="muted" style="font-size:12px">'+esc(m.note)+'</div>':""}</td><td>${f("o")}</td><td>${f("r")}</td><td>${f("w")}</td><td>${f("l")}</td><td>${f("s")}</td></tr>`}).join("");
   const cps=CHECKPOINTS.map(c=>`<div class="cp"><div class="when mono">${fmt(c.d)}${c.d<=t?' <span class="muted" style="font-weight:500">✓</span>':""}</div><div><b>${esc(c.title)}</b><div><span class="ok">Đạt khi:</span> ${esc(c.pass)}</div><div><span class="no">Nếu chưa đạt:</span> ${esc(c.fail)}</div></div></div>`).join("");
   return `<h2 style="margin-top:4px">Đường điểm Overall</h2><div class="card">${chartSVG()}</div>
   <h2>Kết quả thi thử</h2><div class="card tablewrap"><table><thead><tr><th>Ngày</th><th>Nguồn</th><th>Overall</th><th>Reading</th><th>Writing</th><th>Listening</th><th>Speaking</th></tr></thead><tbody>
-  <tr class="muted"><td class="mono">28/09</td><td>${esc(BASELINE.src)}<div style="font-size:12px">Tự đánh giá Speaking ~80–90</div></td><td>—</td><td class="mono">105</td><td class="mono">130</td><td class="mono">115</td><td class="mono">105</td></tr>${rows}</tbody></table>
+  <tr class="muted"><td class="mono">28/09</td><td>${esc(BASELINE.src)}<div style="font-size:12px">Tự đánh giá Speaking ~80–90</div></td><td>—</td><td class="mono">${BASELINE.r}</td><td class="mono">${BASELINE.w}</td><td class="mono">${BASELINE.l}</td><td class="mono">${BASELINE.s}</td></tr>${rows}</tbody></table>
   <div class="muted" style="font-size:12px;margin-top:8px">Đề Practice chính thức chỉ cho khoảng điểm: ghi số giữa khoảng vào ô Overall.</div></div>
-  <div class="row2" style="margin-top:12px"><div class="card"><label class="f">Ngày thi dự kiến</label><input class="txt" type="date" id="examDate" value="${esc(state.examDate)}"><div class="muted" style="font-size:12px;margin-top:6px">Đổi ngày ở đây để cập nhật đếm ngược. Lịch chi tiết vẫn theo mốc 20/1 cho tới khi được sắp lại.</div></div>
+  <div class="row2" style="margin-top:12px"><div class="card"><label class="f" for="examDate">Ngày thi dự kiến</label><input class="txt" type="date" id="examDate" value="${esc(state.settings.examDate)}"><div class="muted" style="font-size:12px;margin-top:6px">Đổi ngày ở đây để cập nhật đếm ngược. Lịch chi tiết vẫn theo mốc 20/1 cho tới khi được sắp lại.</div></div>
   <div class="card"><h3>Đăng ký thi</h3><div style="font-size:14px">Quyết định ngày <b>28/12</b> sau bài Practice Test. Đã mua bài thi thì phải bắt đầu làm trong vòng 21 ngày.</div></div></div>
   <h2>Mốc kiểm tra</h2><div class="card">${cps}</div>`;
 }
-function vErrors(){
-  const counts={};for(const e of state.errors)counts[e.type]=(counts[e.type]||0)+1;
-  const list=state.errors.filter(e=>errFilter==="all"||e.type===errFilter).slice().reverse();
-  return `<h2 style="margin-top:4px">Thêm lỗi mới</h2>
-  <form class="card form" id="errForm">
-   <div><label class="f">Dạng bài</label><select id="eq">${QTYPES.map(q=>`<option>${esc(q)}</option>`).join("")}</select></div>
-   <div><label class="f">Loại lỗi</label><select id="et">${ERRTYPES.map(q=>`<option>${esc(q)}</option>`).join("")}</select></div>
-   <div class="full"><label class="f">Câu sai</label><textarea id="ew" rows="2" placeholder="There is a man sit on bench."></textarea></div>
-   <div class="full"><label class="f">Câu đúng</label><textarea id="er" rows="2" placeholder="There is a man sitting on a bench."></textarea></div>
-   <div class="full" style="display:flex;justify-content:flex-end"><button class="btn pri" type="submit">Lưu lỗi</button></div>
-  </form>
-  <h2>Sổ lỗi <span class="muted mono" style="font-weight:600;font-size:14px">${state.errors.length}</span></h2>
-  <div class="chips"><button class="chip ${errFilter==="all"?"on":""}" data-ef="all">Tất cả<b>${state.errors.length}</b></button>${ERRTYPES.filter(t=>counts[t]).sort((a,b)=>counts[b]-counts[a]).map(t=>`<button class="chip ${errFilter===t?"on":""}" data-ef="${esc(t)}">${esc(t)}<b>${counts[t]}</b></button>`).join("")}</div>
-  <div class="card">${list.length?list.map(e=>`<div class="err"><div style="display:flex;justify-content:space-between;gap:8px;align-items:center"><div class="tmeta" style="margin:0"><span class="pill" style="background:var(--soft);color:var(--acc)">${esc(e.type)}</span><span class="mins">${esc(e.q)} · ${fmt(e.d)}</span></div><button class="del" data-del="${esc(e.id)}">Xoá</button></div><div class="wrong">${esc(e.w)}</div><div class="right">${esc(e.r)}</div></div>`).join(""):'<div class="empty">Chưa có lỗi nào. Mỗi lần luyện xong, ghi lại 1–3 câu sai ở đây.</div>'}</div>`;
+
+/* ---------- Sổ lỗi ---------- */
+function typeChips(sel,attr){return ERRTYPES.map(t=>`<button type="button" class="chip ${sel===t?"on":""}" ${attr}="${esc(t)}">${esc(t)}</button>`).join("")}
+function qtypeOptions(sel){return QTYPES.map(q=>`<option value="${esc(q)}" ${q===sel?"selected":""}>${esc(q)}</option>`).join("")}
+function parseBulk(txt){
+  return txt.split(/\r?\n/).map(l=>l.trim()).filter(Boolean).map(l=>{
+    const p=l.split(/\s*(?:=>|->|→|\t)\s*/);
+    return {wrong:p[0]||"",right:p[1]||"",note:p.slice(2).join(" · ")};
+  }).filter(x=>x.wrong||x.right);
 }
+function errForm(){
+  const one=draft.mode==="one";
+  return `<form class="card" id="errForm" autocomplete="off">
+   <div class="tabs" role="tablist"><button type="button" class="${one?"on":""}" data-fmode="one">Một câu</button><button type="button" class="${one?"":"on"}" data-fmode="bulk">Dán nhiều câu</button></div>
+   <div class="form">
+   ${one?`
+    <div class="full"><label class="f" for="fWrong">Câu sai</label><textarea id="fWrong" rows="2" placeholder="There is a man sit on bench.">${esc(draft.wrong)}</textarea></div>
+    <div class="full"><label class="f" for="fRight">Câu đúng</label><textarea id="fRight" rows="2" placeholder="There is a man sitting on a bench.">${esc(draft.right)}</textarea></div>
+    <div class="full"><label class="f" for="fNote">Vì sao sai? (một dòng quy tắc, không bắt buộc)</label><input class="txt" id="fNote" value="${esc(draft.note)}" placeholder="Sau there is + N + V-ing; danh từ đếm được số ít cần a/an"></div>`
+   :`<div class="full"><label class="f" for="fBulk">Mỗi dòng một lỗi: <span class="mono">câu sai => câu đúng => vì sao</span></label><textarea id="fBulk" rows="6" placeholder="He go to school => He goes to school => ngôi 3 số ít thêm -s&#10;I am interesting in music => I am interested in music&#10;make a research => do research">${esc(draft.bulk)}</textarea>
+    <div class="hint" id="bulkCount" style="margin-top:4px">${bulkCountText()}</div></div>`}
+    <div class="full"><label class="f">Loại lỗi</label><div class="chips" id="fTypes">${typeChips(prefs.type,"data-ftype")}</div></div>
+    <div><label class="f" for="fQtype">Dạng bài</label><select id="fQtype">${qtypeOptions(prefs.qtype)}</select></div>
+    <div class="formfoot" style="align-self:end"><span class="hint">${one?"Ctrl/⌘ + Enter để lưu":""}</span><button class="btn pri" type="submit">${one?"Lưu lỗi":"Lưu tất cả"}</button></div>
+   </div></form>`;
+}
+function bulkCountText(){const n=parseBulk(draft.bulk).length;return n?`Nhận được <b>${n}</b> lỗi. Tất cả sẽ dùng loại lỗi và dạng bài chọn bên dưới.`:"Có thể dán thẳng phần chữa bài của Gemini, mỗi lỗi một dòng."}
+function filteredErrors(){
+  const t=todayISO(),q=normTxt(ef.q);
+  return state.errors.filter(e=>{
+    if(ef.type!=="all"&&e.type!==ef.type)return false;
+    if(ef.status==="due"&&e.due>t)return false;
+    if(ef.status!=="all"&&ef.status!=="due"&&errStatus(e)!==ef.status)return false;
+    if(q&&!normTxt(e.wrong+" "+e.right+" "+e.note+" "+e.qtype).includes(q))return false;
+    return true;
+  }).sort((a,b)=>b.created.localeCompare(a.created)||(b.id>a.id?1:-1));
+}
+function errItem(e){
+  const t=todayISO();
+  if(editId===e.id){const d=editDraft;return `<div class="err editing"><div class="form">
+    <div class="full"><label class="f" for="edWrong">Câu sai</label><textarea id="edWrong" rows="2">${esc(d.wrong)}</textarea></div>
+    <div class="full"><label class="f" for="edRight">Câu đúng</label><textarea id="edRight" rows="2">${esc(d.right)}</textarea></div>
+    <div class="full"><label class="f" for="edNote">Vì sao sai?</label><input class="txt" id="edNote" value="${esc(d.note)}"></div>
+    <div class="full"><label class="f">Loại lỗi</label><div class="chips">${typeChips(d.type,"data-edtype")}</div></div>
+    <div><label class="f" for="edQtype">Dạng bài</label><select id="edQtype">${qtypeOptions(d.qtype)}</select></div>
+    <div class="formfoot" style="align-self:end;justify-content:flex-end"><button class="tlink" data-edreset="${esc(e.id)}" title="Đưa về hộp 0, ôn lại từ hôm nay">Ôn lại từ đầu</button><button class="btn sm" data-edcancel>Huỷ</button><button class="btn sm pri" data-edsave="${esc(e.id)}">Lưu</button></div>
+  </div></div>`}
+  const st=errStatus(e),isDue=e.due<=t;
+  return `<div class="err"><div class="hd"><div class="tmeta" style="margin:0"><span class="pill p-type">${esc(e.type)}</span><span class="mins">${esc(e.qtype)} · ${fmt(e.created)}</span></div></div>
+   ${pairHTML(e)}
+   ${e.note?`<div class="why"><b>Vì sao:</b> ${esc(e.note)}</div>`:""}
+   <div class="ft"><span>${boxesHTML(e)}${STATUS[st]}${isDue?' · <b style="color:var(--bad)">đến hạn</b>':` · ôn lại ${fmt(e.due)}`}${e.lapses?` · quên ${e.lapses} lần`:""}</span>
+   <span class="acts"><button class="tlink" data-edit="${esc(e.id)}">Sửa</button><button class="tlink dng" data-del="${esc(e.id)}">${pendingDel===e.id?"Bấm lần nữa để xoá":"Xoá"}</button></span></div></div>`;
+}
+function errListHTML(){
+  const list=filteredErrors();
+  if(!state.errors.length)return `<div class="empty">Chưa có lỗi nào. Sau mỗi buổi luyện, ghi 1–3 câu sai ở khung bên trên.</div>`;
+  if(!list.length)return `<div class="empty">Không có lỗi nào khớp bộ lọc.</div>`;
+  const shown=list.slice(0,ef.limit);
+  return shown.map(errItem).join("")+(list.length>shown.length?`<div style="text-align:center;padding-top:12px"><button class="btn sm" data-more>Xem thêm ${Math.min(40,list.length-shown.length)} lỗi (còn ${list.length-shown.length})</button></div>`:"");
+}
+function renderErrList(){const el=$("#errList");if(el)el.innerHTML=errListHTML();const c=$("#errShown");if(c)c.textContent=filteredErrors().length}
+function vErrors(){
+  const t=todayISO(),E=state.errors;
+  const cnt={new:0,learning:0,done:0};for(const e of E)cnt[errStatus(e)]++;
+  const byType={};for(const e of E)byType[e.type]=(byType[e.type]||0)+1;
+  const types=Object.keys(byType).sort((a,b)=>byType[b]-byType[a]);
+  const nDue=E.filter(e=>e.due<=t).length;
+  const pct=k=>E.length?cnt[k]/E.length*100:0;
+  const stChip=(k,l,n)=>`<button class="chip ${ef.status===k?"on":""}" data-est="${k}">${l}<b>${n}</b></button>`;
+  return `${reviewCTA(false)}
+  ${E.length?`<div class="card" style="margin-top:12px"><div class="kpi"><div class="lab">Tiến độ ${E.length} lỗi</div></div>
+   <div class="seg" aria-hidden="true"><i class="s-done" style="width:${pct("done")}%"></i><i class="s-learning" style="width:${pct("learning")}%"></i><i class="s-new" style="width:${pct("new")}%"></i></div>
+   <div class="legend"><span style="--c:var(--ok)">Đã thuộc <b class="mono">${cnt.done}</b></span><span style="--c:var(--acc)">Đang nhớ <b class="mono">${cnt.learning}</b></span><span style="--c:var(--line2)">Mới <b class="mono">${cnt.new}</b></span></div>
+   ${types.length?`<div class="hint" style="margin:12px 0 6px">Hay sai nhất (bấm để lọc, rồi có thể ôn riêng nhóm đó):</div><div class="chips">${types.slice(0,6).map(k=>`<button class="chip ${ef.type===k?"on":""}" data-ety="${esc(k)}">${esc(k)}<b>${byType[k]}</b></button>`).join("")}</div>`:""}
+  </div>`:""}
+  <h2>Thêm lỗi</h2>${errForm()}
+  <h2>Danh sách <span class="muted mono" style="font-weight:600;font-size:14px" id="errShown">${filteredErrors().length}</span></h2>
+  <div class="filters">
+   <div class="top"><input class="txt" id="errQ" type="search" placeholder="Tìm trong câu sai, câu đúng, ghi chú…" value="${esc(ef.q)}">
+    <select id="errType" style="width:auto" aria-label="Lọc theo loại lỗi"><option value="all">Mọi loại lỗi</option>${ERRTYPES.map(k=>`<option value="${esc(k)}" ${ef.type===k?"selected":""}>${esc(k)}${byType[k]?` (${byType[k]})`:""}</option>`).join("")}</select>
+    ${ef.type!=="all"&&byType[ef.type]?`<button class="btn sm" data-start="type">Ôn riêng ${esc(ef.type)} (${byType[ef.type]})</button>`:""}</div>
+   <div class="chips">${stChip("all","Tất cả",E.length)}${stChip("due","Đến hạn",nDue)}${stChip("new","Mới",cnt.new)}${stChip("learning","Đang nhớ",cnt.learning)}${stChip("done","Đã thuộc",cnt.done)}</div>
+  </div>
+  <div class="card" id="errList">${errListHTML()}</div>`;
+}
+
+/* ---------- Phiên ôn ---------- */
+function newSession(ids,label){return {ids:[...ids],i:0,revealed:false,typed:"",seen:new Set(),requeued:new Set(),res:{again:0,hard:0,good:0},missed:[],label}}
+function buildSession(kind){
+  const due=dueErrors();
+  if(kind==="type"){const l=state.errors.filter(e=>e.type===ef.type).sort((a,b)=>a.box-b.box||a.due.localeCompare(b.due));return newSession(l.map(e=>e.id),"Ôn riêng: "+ef.type)}
+  if(kind==="extra"){const p=plan4Today();const pool=due.length?due:state.errors.slice().sort((a,b)=>a.due.localeCompare(b.due));return newSession(pool.slice(0,10).map(e=>e.id),"Ôn thêm")}
+  const p=plan4Today();return newSession(due.slice(0,p.goal||Math.min(10,due.length)).map(e=>e.id),"Ôn hôm nay");
+}
+function currentCard(){
+  while(session&&session.i<session.ids.length){const e=state.errors.find(x=>x.id===session.ids[session.i]);if(e)return e;session.i++}
+  return null;
+}
+function vReview(){
+  if(!session)session=buildSession("due");
+  const total=session.ids.length;
+  if(!total)return `<div class="rv"><div class="card empty"><b>Không có câu nào cần ôn.</b><br>${state.errors.length?"Bạn đã ôn hết phần đến hạn.":"Sổ lỗi đang trống."}<div style="margin-top:12px"><a class="btn" href="#errors" data-endrev>Về Sổ lỗi</a></div></div></div>`;
+  const e=currentCard();
+  if(!e)return vSummary();
+  const pos=Math.min(session.i+1,total);
+  const hasW=!!e.wrong;
+  const ask=hasW?"Câu này sai ở đâu? Tự sửa lại:":"Nhớ lại câu đúng:";
+  const prompt=hasW?esc(e.wrong):(e.note?esc(e.note):`<span class="muted">(${esc(e.type)} · ${esc(e.qtype)})</span>`);
+  let ans="";
+  if(session.revealed){
+    let typed="";
+    if(session.typed.trim()&&e.right){
+      const ok=normTxt(session.typed)===normTxt(e.right);
+      typed=ok?`<div class="typed good">✓ Bạn gõ đúng</div>`:`<div class="typed"><span class="muted">Bạn gõ:</span> ${wordDiff(session.typed,e.right).m} <span class="muted">(đỏ: thừa/sai · xanh: còn thiếu)</span></div>`;
+      session.suggest=ok?"good":"";
+    }else session.suggest="";
+    ans=`<div class="rv-ans">${typed}${pairHTML(e)}${e.note&&hasW?`<div class="why"><b>Vì sao:</b> ${esc(e.note)}</div>`:""}</div>
+    <div class="grades">${["again","hard","good"].map((g,k)=>{const s=schedule(e,g);const lab={again:"Quên",hard:"Mang máng",good:"Nhớ chắc"}[g];return `<button class="btn g-${g} ${session.suggest===g?"sug":""}" data-grade="${g}">${lab}<small>${g==="again"?"gặp lại mai":"ôn lại sau "+dayLabel(s.days)}</small></button>`}).join("")}</div>`;
+  }
+  return `<div class="rv">
+   <div class="rv-top"><a class="btn sm" href="#errors" data-endrev aria-label="Dừng ôn">✕</a><div class="bar"><i style="width:${(session.i)/total*100}%"></i></div><span class="mono mins">${pos}/${total}</span></div>
+   <div class="card rv-card">
+    <div class="tmeta"><span class="pill p-type">${esc(e.type)}</span><span class="mins">${esc(e.qtype)}</span><span class="mins">${boxesHTML(e)}</span></div>
+    <div class="rv-q">${ask}</div><div class="rv-p">${prompt}</div>
+    ${e.right&&!session.revealed?`<div style="margin-top:14px"><label class="f" for="rvIn">Gõ câu đúng (không bắt buộc)</label><input class="txt" id="rvIn" value="${esc(session.typed)}" autocomplete="off" autocapitalize="off" spellcheck="false" placeholder="Gõ rồi Enter, hoặc bấm Xem đáp án"></div>`:""}
+    ${session.revealed?ans:`<div style="margin-top:14px"><button class="btn pri" data-reveal style="width:100%">Xem đáp án</button></div>`}
+   </div>
+   <div class="keys">${session.revealed?"<kbd>1</kbd> Quên · <kbd>2</kbd> Mang máng · <kbd>3</kbd> Nhớ chắc":"<kbd>Enter</kbd> xem đáp án"} · <kbd>Esc</kbd> dừng</div>
+  </div>`;
+}
+function vSummary(){
+  const r=session.res,p=plan4Today();
+  const missed=session.missed.map(id=>state.errors.find(e=>e.id===id)).filter(Boolean);
+  return `<div class="rv"><div class="card rv-card">
+   <h2 style="margin:0">Xong phiên ôn</h2><div class="muted" style="font-size:14px">${esc(session.label)} · ${session.seen.size} câu</div>
+   <div class="sumgrid"><div style="background:var(--okbg);color:var(--ok)"><b>${r.good}</b>Nhớ chắc</div><div style="background:var(--warnbg);color:var(--warn)"><b>${r.hard}</b>Mang máng</div><div style="background:var(--badbg);color:var(--bad)"><b>${r.again}</b>Quên</div></div>
+   ${missed.length?`<div class="hint" style="margin-bottom:6px">Đọc lại một lượt các câu vừa quên (mai sẽ gặp lại):</div><div style="display:grid;gap:10px;margin-bottom:12px">${missed.map(e=>`<div>${pairHTML(e)}${e.note?`<div class="why">${esc(e.note)}</div>`:""}</div>`).join("")}</div>`:""}
+   <div style="display:flex;gap:8px;flex-wrap:wrap">${p.goal>0?`<button class="btn pri" data-start="due">Ôn tiếp ${p.goal} câu</button>`:""}<a class="btn" href="#errors" data-endrev>Về Sổ lỗi</a><a class="btn" href="#today" data-endrev>Về Hôm nay</a></div>
+  </div></div>`;
+}
+function grade(g){
+  const e=currentCard();if(!e)return;
+  const t=todayISO(),s=schedule(e,g);
+  const first=!session.seen.has(e.id);
+  e.box=s.box;e.due=addDays(t,s.days);e.last=t;e.reps++;
+  if(g==="again"){e.lapses++;if(!session.requeued.has(e.id)){session.requeued.add(e.id);session.ids.push(e.id)}if(!session.missed.includes(e.id))session.missed.push(e.id)}
+  if(first){session.seen.add(e.id);session.res[g]++;const l=state.log[t]||(state.log[t]={n:0,ok:0});l.n++;if(g==="good")l.ok++}
+  session.i++;session.revealed=false;session.typed="";
+  changed();render();
+  const inp=$("#rvIn");if(inp)inp.focus();
+}
+function reveal(){if(!session||session.revealed)return;const inp=$("#rvIn");if(inp)session.typed=inp.value;session.revealed=true;render();if(document.activeElement)document.activeElement.blur()}
+
+/* ---------- Phương pháp ---------- */
 function vMethods(){
   return `<h2 style="margin-top:4px">Phương pháp theo từng điểm yếu</h2>`+METHODS.map(m=>`<div class="card method"><h3>${esc(m.k)}</h3><span class="prob">${esc(m.p)}</span><div class="row"><b>Cách luyện</b><div>${esc(m.h)}</div></div><div class="row"><b>Khung / mẹo thi</b><div>${esc(m.t)}</div></div></div>`).join("");
 }
-const VIEWS={today:vToday,plan:vPlan,scores:vScores,errors:vErrors,methods:vMethods};
+
+/* ---------- khung render ---------- */
+const VIEWS={today:vToday,plan:vPlan,scores:vScores,errors:vErrors,methods:vMethods,review:vReview};
 function current(){const h=location.hash.replace("#","");return VIEWS[h]?h:"today"}
 function render(){
   const v=current();
-  document.querySelectorAll("#nav a").forEach(a=>a.classList.toggle("on",a.dataset.v===v));
+  document.querySelectorAll("#nav a").forEach(a=>a.classList.toggle("on",a.dataset.v===v||(v==="review"&&a.dataset.v==="errors")));
+  const g=plan4Today().goal;$("#navDue").textContent=g>0?g:"";
   const openWeeks=[...document.querySelectorAll("details.week")].map(d=>d.open);
-  const y=window.scrollY;const ae=document.activeElement;const focusKey=ae&&(ae.dataset.mock?("m"+ae.dataset.mock+ae.dataset.k):ae.dataset.wnote?("w"+ae.dataset.wnote):null);
+  const y=window.scrollY;const ae=document.activeElement;const fid=ae&&ae.id&&$("#app").contains(ae)?ae.id:null;
+  let sel=null;try{if(fid)sel=[ae.selectionStart,ae.selectionEnd]}catch(e){}
   $("#app").innerHTML=VIEWS[v]();
   if(v==="plan"&&openWeeks.length===WEEKS.length)document.querySelectorAll("details.week").forEach((d,i)=>d.open=openWeeks[i]);
-  if(focusKey){const el=focusKey[0]==="m"?document.querySelector(`[data-mock="${ae.dataset.mock}"][data-k="${ae.dataset.k}"]`):document.querySelector(`[data-wnote="${ae.dataset.wnote}"]`);if(el){el.focus();}}
+  if(fid){const el=document.getElementById(fid);if(el){el.focus({preventScroll:true});try{if(sel&&sel[0]!=null)el.setSelectionRange(sel[0],sel[1])}catch(e){}}}
   window.scrollTo(0,y);
 }
 
-/* ---------- events ---------- */
+/* =====================================================================
+   6. SỰ KIỆN
+   ===================================================================== */
 document.addEventListener("change",e=>{
   const t=e.target;
-  if(t.matches(".chk[data-id]")){if(t.checked)state.done[t.dataset.id]=true;else delete state.done[t.dataset.id];changed();render();if(t.checked)toast("Xong! 👍")}
-  else if(t.id==="examDate"&&t.value){state.examDate=t.value;changed();render()}
+  if(t.matches(".chk[data-id]")){if(t.checked)state.plan.done[t.dataset.id]=true;else delete state.plan.done[t.dataset.id];changed();render();if(t.checked)toast("Xong! 👍")}
+  else if(t.id==="examDate"&&t.value){state.settings.examDate=t.value;changed();render()}
+  else if(t.id==="fQtype"){prefs.qtype=t.value;savePrefs()}
+  else if(t.id==="errType"){ef.type=t.value;ef.limit=40;render()}
+  else if(t.id==="edQtype"&&editDraft){editDraft.qtype=t.value}
+  else if(t.id==="impFile"&&t.files[0]){
+    const rd=new FileReader();
+    rd.onload=()=>{try{const inc=migrate(JSON.parse(rd.result));const n=mergeState(state,inc);changed();render();toast(`Đã gộp bản sao lưu: thêm ${n} lỗi mới`)}catch(err){toast("File không đúng định dạng sao lưu của trang này")}t.value=""};
+    rd.readAsText(t.files[0]);
+  }
 });
 document.addEventListener("input",e=>{
   const t=e.target;
   if(t.dataset.mock){const m=state.mocks[t.dataset.mock]||(state.mocks[t.dataset.mock]={});const v=t.value.replace(/[^0-9]/g,"");if(v!==t.value)t.value=v;if(v==="")delete m[t.dataset.k];else m[t.dataset.k]=Number(v);changed()}
-  else if(t.dataset.wnote){state.weekNotes[t.dataset.wnote]=t.value;changed()}
+  else if(t.dataset.wnote){state.plan.notes[t.dataset.wnote]=t.value;changed()}
+  else if(t.id==="fWrong")draft.wrong=t.value;
+  else if(t.id==="fRight")draft.right=t.value;
+  else if(t.id==="fNote")draft.note=t.value;
+  else if(t.id==="fBulk"){draft.bulk=t.value;const c=$("#bulkCount");if(c)c.innerHTML=bulkCountText()}
+  else if(t.id==="errQ"){ef.q=t.value;ef.limit=40;renderErrList()}
+  else if(t.id==="rvIn"&&session)session.typed=t.value;
+  else if(editDraft&&t.id==="edWrong")editDraft.wrong=t.value;
+  else if(editDraft&&t.id==="edRight")editDraft.right=t.value;
+  else if(editDraft&&t.id==="edNote")editDraft.note=t.value;
 });
 document.addEventListener("focusout",e=>{if(e.target.dataset&&e.target.dataset.mock&&current()==="scores"){setTimeout(()=>{if(!document.activeElement||!document.activeElement.dataset.mock)render()},50)}});
 document.addEventListener("click",e=>{
-  const n=e.target.closest("[data-nav]");if(n){const k=Number(n.dataset.nav);viewDate=k===0?todayISO():addDays(viewDate,k);render();return}
-  const f=e.target.closest("[data-ef]");if(f){errFilter=f.dataset.ef;render();return}
-  const d=e.target.closest("[data-del]");if(d){state.errors=state.errors.filter(x=>x.id!==d.dataset.del);changed();render();toast("Đã xoá");return}
+  const c=k=>e.target.closest(k);let n;
+  if(n=c("[data-nav]")){const k=Number(n.dataset.nav);viewDate=k===0?todayISO():addDays(viewDate,k);render();return}
+  if(n=c("[data-start]")){e.preventDefault();session=buildSession(n.dataset.start);if(current()!=="review")location.hash="review";else{window.scrollTo(0,0);render()}return}
+  if(c("[data-reveal]")){reveal();return}
+  if(n=c("[data-grade]")){grade(n.dataset.grade);return}
+  if(c("[data-endrev]")){session=null;return}
+  if(n=c("[data-fmode]")){draft.mode=n.dataset.fmode;render();const f=$(draft.mode==="one"?"#fWrong":"#fBulk");if(f)f.focus();return}
+  if(n=c("[data-ftype]")){prefs.type=n.dataset.ftype;savePrefs();n.parentElement.querySelectorAll(".chip").forEach(x=>x.classList.toggle("on",x===n));return}
+  if(n=c("[data-edtype]")){editDraft.type=n.dataset.edtype;n.parentElement.querySelectorAll(".chip").forEach(x=>x.classList.toggle("on",x===n));return}
+  if(n=c("[data-est]")){ef.status=n.dataset.est;ef.limit=40;render();return}
+  if(n=c("[data-ety]")){ef.type=ef.type===n.dataset.ety?"all":n.dataset.ety;ef.limit=40;render();$("#errQ")?.scrollIntoView({block:"center"});return}
+  if(c("[data-more]")){ef.limit+=40;renderErrList();return}
+  if(n=c("[data-edit]")){const x=state.errors.find(z=>z.id===n.dataset.edit);if(!x)return;editId=x.id;editDraft={wrong:x.wrong,right:x.right,note:x.note,type:x.type,qtype:x.qtype};renderErrList();$("#edWrong")?.focus();return}
+  if(c("[data-edcancel]")){editId=null;editDraft=null;renderErrList();return}
+  if(n=c("[data-edsave]")){const x=state.errors.find(z=>z.id===n.dataset.edsave);if(x&&editDraft){Object.assign(x,{wrong:editDraft.wrong.trim(),right:editDraft.right.trim(),note:editDraft.note.trim(),type:editDraft.type,qtype:editDraft.qtype});changed()}editId=null;editDraft=null;render();toast("Đã lưu thay đổi");return}
+  if(n=c("[data-edreset]")){const x=state.errors.find(z=>z.id===n.dataset.edreset);if(x){x.box=0;x.due=todayISO();changed()}editId=null;editDraft=null;render();toast("Câu này sẽ được ôn lại từ hôm nay");return}
+  if(n=c("[data-del]")){const id=n.dataset.del;clearTimeout(pendingDelTimer);
+    if(pendingDel===id){state.errors=state.errors.filter(x=>x.id!==id);pendingDel=null;changed();render();toast("Đã xoá");return}
+    pendingDel=id;renderErrList();pendingDelTimer=setTimeout(()=>{pendingDel=null;renderErrList()},3500);return}
+  if(c("#btnExport")){
+    const blob=new Blob([JSON.stringify(state,null,1)],{type:"application/json"});
+    const a=document.createElement("a");a.href=URL.createObjectURL(blob);a.download=`det120-sao-luu-${todayISO()}.json`;document.body.appendChild(a);a.click();
+    setTimeout(()=>{URL.revokeObjectURL(a.href);a.remove()},1000);toast("Đã tạo file sao lưu");return}
+  if(c("#btnImport")){$("#impFile").click();return}
 });
 document.addEventListener("submit",e=>{
   if(e.target.id!=="errForm")return;e.preventDefault();
-  const w=$("#ew").value.trim(),r=$("#er").value.trim();if(!w&&!r){toast("Nhập câu sai hoặc câu đúng");return}
-  state.errors.push({id:Date.now().toString(36)+Math.random().toString(36).slice(2,6),d:todayISO(),q:$("#eq").value,type:$("#et").value,w,r});
-  if(state.errors.length>1500)state.errors=state.errors.slice(-1500);
-  changed();render();toast("Đã lưu lỗi");
+  const t=todayISO();
+  const mk=x=>({id:uid(),created:t,qtype:prefs.qtype,type:prefs.type,wrong:x.wrong.trim(),right:x.right.trim(),note:(x.note||"").trim(),box:0,due:addDays(t,1),last:"",reps:0,lapses:0});
+  let items;
+  if(draft.mode==="one"){if(!draft.wrong.trim()&&!draft.right.trim()){toast("Nhập câu sai hoặc câu đúng");$("#fWrong")?.focus();return}items=[mk(draft)];draft.wrong=draft.right=draft.note=""}
+  else{const b=parseBulk(draft.bulk);if(!b.length){toast("Chưa có dòng nào hợp lệ");return}items=b.map(mk);draft.bulk=""}
+  state.errors.push(...items);
+  changed();render();toast(items.length>1?`Đã lưu ${items.length} lỗi · ôn từ ngày mai`:"Đã lưu lỗi · ôn từ ngày mai");
+  $(draft.mode==="one"?"#fWrong":"#fBulk")?.focus();
 });
-window.addEventListener("hashchange",()=>{window.scrollTo(0,0);render()});
-initDb();
+document.addEventListener("keydown",e=>{
+  const t=e.target;
+  if(t&&t.closest&&t.closest("#errForm")&&e.key==="Enter"&&(e.metaKey||e.ctrlKey)){e.preventDefault();$("#errForm").requestSubmit();return}
+  if(current()!=="review"||!session)return;
+  if(t&&t.id==="rvIn"){if(e.key==="Enter"){e.preventDefault();reveal()}else if(e.key==="Escape"){t.blur()}return}
+  if(t&&/INPUT|TEXTAREA|SELECT/.test(t.tagName))return;
+  if(e.key==="Escape"){session=null;location.hash="errors";return}
+  if(!currentCard())return;
+  if(!session.revealed&&(e.key==="Enter"||e.key===" ")){e.preventDefault();reveal();return}
+  if(session.revealed){const g={"1":"again","2":"hard","3":"good"}[e.key];if(g){e.preventDefault();grade(g)}}
+});
+window.addEventListener("hashchange",()=>{if(current()!=="review")session=null;editId=null;editDraft=null;window.scrollTo(0,0);render();if(current()==="review")$("#rvIn")?.focus()});
+init();
 </script>
 </body>
 </html>
